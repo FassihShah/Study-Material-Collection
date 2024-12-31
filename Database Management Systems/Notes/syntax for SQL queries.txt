@@ -1,0 +1,141 @@
+Select * from A cross join B  ==> (cartesian product rows of A * rows of B)
+
+
+==> natural join same as inner but we don't need to mention any condition
+Select * from A natural join B
+
+Select ename, dname from emp,dept
+    where emp.deptno = dept.deptno;	
+Select ename, dptno, dname 
+    from emp INNER JOIN dept
+    ON emp.deptno = dept.deptno;	
+Select ename, dname from emp JOIN dept
+    ON emp.deptno = dept.deptno;	
+Select ename, dname from emp JOIN dept
+    USING (deptno);
+Select e.empno, e.ename, d.deptno, d.dname
+    from emp e JOIN dept d
+    ON e.deptno = d.deptno;	
+
+
+create table dumy
+(
+    rn int primary key,
+    e int unique,
+    sal int check ( sal>1000)
+);
+
+CREATE TABLE Employees 
+(
+    EmployeeID INT CONSTRAINT PK_Employee PRIMARY KEY,
+    Name VARCHAR(100) NOT NULL,
+    DepartmentID INT,
+    Salary DECIMAL(10, 2) DEFAULT 0.00,
+    CONSTRAINT FK_Department FOREIGN KEY (DepartmentID) REFERENCES Departments(DepartmentID),
+    CONSTRAINT CHK_Salary CHECK (Salary >= 0)
+);
+
+
+column level
+CREATE TABLE Employees 
+(
+    EmployeeID INT PRIMARY KEY,                -- Column-level constraint
+    Name VARCHAR(100) NOT NULL,                -- Column-level constraint
+    DepartmentID INT,                          
+    Salary DECIMAL(10, 2) CHECK (Salary >= 0)  -- Column-level constraint
+);
+ 
+
+
+
+table level
+
+
+CREATE TABLE Employees (
+    EmployeeID INT,
+    Name VARCHAR(100) NOT NULL,
+    DepartmentID INT,
+    Salary DECIMAL(10, 2),
+    CONSTRAINT PK_Employee PRIMARY KEY (EmployeeID),                  -- Table-level constraint
+    CONSTRAINT CHK_Salary CHECK (Salary >= 0),                        -- Table-level constraint
+    CONSTRAINT FK_Department FOREIGN KEY (DepartmentID) REFERENCES Departments(DepartmentID) -- Table-level constraint
+);
+
+alter table A
+add age int
+
+alter table A
+drop column age
+
+ALTER TABLE table_name
+RENAME COLUMN old_name to new_name;
+
+alter table A
+modify name varchar(20)
+
+
+select constraint_name,column_name from user_cons_columns where table_name='EMP'
+
+min();
+max()
+avg()
+sum()
+count(*) where
+count(comm) -> gives non null
+count ( distinct express)
+avg(nvl(comm,0))
+
+LOWER('SQL')
+UPPER('sql')
+INTCAP('sql')
+
+CONCAT(‘Fall', ‘2020')
+SUBSTR(‘PUCIT',1,3)
+SUBSTR(‘PUCIT',3)
+SUBSTR(‘PUCIT',-4,2)
+LENGTH(‘PUCIT')
+INSTR(‘PUCIT', ‘C')
+LPAD(sal,10,'*')
+LTRIM(‘***ABC’,*)
+RTRIM(‘ABC***’,*)
+REPLACE(‘ARIF’,’R’,’S’)
+TRANSLATE(‘ABCDEF’, ‘ACE’,’#@%’)
+
+TRUNC(45.926, 2)
+MOD(1600, 300)
+
+MONTHS_BETWEEN ('01-SEP-95','11-JAN-94')
+ADD_MONTHS ('11-JAN-94',6)
+NEXT_DAY ('01-SEP-95','FRIDAY') 
+LAST_DAY('01-SEP-95')
+
+WHERE	hiredate = TO_DATE(‘Oct 20,09‘, ‘mon dd,yy‘)
+TO_CHAR(sal,'$99,999') 
+TO_CHAR(hiredate, 'DD Month YYYY') 
+NVL2 (expr1, expr2 NOT NULL case, expr3 NULL case)
+
+ select ename,sal from emp where sal=(select max(sal) from emp where sal<(select max(sal) from emp))
+second highest
+select deptno,count(*) from emp group by deptno having count(*)=(select max(count(*)) from emp group by deptno)
+dept with max employees
+SELECT JOB, AVG(SAL) FROM EMP
+GROUP BY JOB
+HAVING AVG(SAL) > 
+(SELECT MIN(AVG(SAL)) FROM EMP 
+GROUP BY JOB)
+SQL> SELECT  empno, ename, job
+  2  FROM    emp
+  3  WHERE   sal IN 	(SELECT	MIN(sal)
+  4 			FROM	emp
+  5			GROUP BY deptno);
+
+SELECT	e.ename,e.job FROM emp e
+WHERE 	e.empno NOT IN
+(SELECT m.mgr FROM emp m
+WHERE m.mgr IS NOT NULL);
+
+
+
+
+
+
