@@ -1,0 +1,19 @@
+#include<iostream>
+#include"SetA1.h"
+using namespace std;
+int main()
+{
+	createSet(10);
+	insertElement(10);
+	insertElement(5);
+	insertElement(50);
+	insertElement(5);
+	insertElement(15);
+	insertElement(100);
+	insertElement(90);
+	removeElement(100);
+	displaySet();
+	freeSet();
+	cout << endl;
+	return 0;
+}

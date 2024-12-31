@@ -1,0 +1,60 @@
+#include<iostream>
+using namespace std;
+class Rectangle
+{
+	float lenght;
+	float width;
+public:
+	void setLenght(int l)
+	{
+		if (l > 0)
+		{
+			lenght = l;
+		}
+	}
+	void setWidth(int w)
+	{
+		if (w > 0)
+		{
+			width = w;
+		}
+	}
+	float getLenght()
+	{
+		return lenght;
+	}
+	float getWidth()
+	{
+		return width;
+	}
+	float calculateArea()
+	{
+		return lenght * width;
+	}
+	float calculatePerimeter()
+	{
+		float perimeter = 2 * (lenght + width);
+		return perimeter;
+	}
+	bool isSquare()
+	{
+		if (lenght == width)
+		{
+			return true;
+		}
+		return false;
+	}
+};
+int main()
+{
+	Rectangle rect;
+	rect.setLenght(6);
+	rect.setWidth(6);
+	cout << "Lenght is : " << rect.getLenght();
+	cout << "\nWidth is : " << rect.getWidth();
+	cout << "\nPerimeter is : " << rect.calculatePerimeter();
+	cout << "\nArea is : " << rect.calculateArea();
+	rect.isSquare() ? cout << "\nIts a square" : cout << "\nNot a square";
+	cout << endl;
+	return 0;
+}

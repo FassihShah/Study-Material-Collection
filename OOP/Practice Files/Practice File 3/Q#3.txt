@@ -1,0 +1,126 @@
+#include<iostream>
+using namespace std;
+class Student
+{
+	char rollNo[11];
+	int semester;
+	char name[100];
+	float CGPA;
+	int getLenght(const char* const src)
+	{
+		int i = 0;
+		while (src[i] != '\0')
+		{
+			i = i + 1;
+		}
+		return i;
+	}
+	void copyString(char* const dest, const char* const src)
+	{
+		int i = 0;
+		while (src[i] != '\0')
+		{
+			dest[i] = src[i];
+			i = i + 1;
+		}
+		dest[i] = '\0';
+	}
+	int joinDigits(const char* roll)
+	{
+		int n = 0, d = 100;
+		for (int i = 7; i < 10; i = i + 1)
+		{
+			n = roll[i] * d + n;
+			d = d / 10;
+		}
+		return n;
+	}
+	bool checkRollNoValidation(const char* roll)
+	{
+		if (getLenght(roll) == 10)
+		{
+			if (roll[7] != '0'  || roll[8] != '0' || roll[9] != '0')
+			{
+				if ((roll[7] >= 48 && roll[7] <= 56) && (roll[8] >= 48 && roll[8] <= 56) && (roll[9] >= 48 && roll[9] <= 56))
+				{
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+public:
+	void setRollNo(const char* roll)
+	{
+		if (checkRollNoValidation(roll))
+		{
+			copyString(rollNo, roll);
+		}
+	}
+	void setSemester(int n)
+	{
+		if (n > 0 && n <= 8)
+		{
+			semester = n;
+		}
+	}
+	void setName(const char* nam)
+	{
+		copyString(name, nam);
+	}
+	void setCGPA(float cgpa)
+	{
+		if (cgpa >= 0 && cgpa <= 4)
+		{
+			CGPA = cgpa;
+		}
+	}
+	const char* getRollNo()
+	{
+		return rollNo;
+	}
+	int getSemester()
+	{
+		return semester;
+	}
+	const char* getName()
+	{
+		return name;
+	}
+	float getCGPA()
+	{
+		return CGPA;
+	}
+	bool isStudentDropOut()
+	{
+		if ((semester > 1 && CGPA < 1.7) || (semester == 1 && CGPA < 1.5))
+		{
+			return true;
+		}
+		return false;
+	}
+	bool isStudentOnProbation()
+	{
+		if ((semester > 1 && CGPA >= 1.7 && CGPA < 2) || (semester == 1 && CGPA >= 1.5 && CGPA < 2))
+		{
+			return true;
+		}
+		return false;
+	}
+};
+int main()
+{
+	Student st;
+	st.setRollNo("BSEF22M023");
+	st.setName("Aslam Ali");
+	st.setCGPA(3.74);
+	st.setSemester(2);
+	cout << "Name : " << st.getName();
+	cout << "\nRoll No. : " << st.getRollNo();
+	cout << "\nCGPA : " << st.getCGPA();
+	cout << "\nSemester : " << st.getSemester();
+	st.isStudentDropOut() ? cout << "\nDropOut" : cout << "\nNot DropOut";
+	st.isStudentOnProbation() ? cout << "\nOn Probation" : cout << "\nNot On Probation";
+	cout << endl;
+	return 0;
+}

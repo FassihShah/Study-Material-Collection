@@ -1,0 +1,47 @@
+#include<iostream>
+#include<fstream>
+using namespace std;
+int findStringLenght(const char array[])
+{
+	int cnt = 0, i = 0;
+	while (array[i] != '\0')
+	{
+		cnt = cnt + 1;
+		i = i + 1;
+	}
+	return cnt;
+}
+int findRepitition(const char file[], const char key[])
+{
+	ifstream ifs;
+	ifs.open(file);
+	int i = 0, count = 0;
+	char ch;
+	ch = ifs.get();
+	while (!ifs.eof())
+	{
+		if (ch == key[i])
+		{
+			i = i + 1;
+		}
+		else
+		{
+			i = 0;
+		}
+		if (i == findStringLenght(key))
+		{
+			count = count + 1;
+			i = 0;
+		}
+		else
+		{
+			ch = ifs.get();
+		}
+	}
+	return count;
+}
+int main()
+{
+	cout << findRepitition("q3.txt", "get");
+	return 0;
+}

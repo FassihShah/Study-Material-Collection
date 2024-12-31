@@ -1,0 +1,44 @@
+#include<iostream>
+#include"SetA3.h"
+using namespace std;
+struct Set
+{
+	int* data;
+	int noOfElements = 0;
+	int size;
+};
+int main()
+{
+	Set s1;
+	createSet(&s1, 10);
+	insertElement(&s1, 10);
+	insertElement(&s1, 5);
+	insertElement(&s1, 50);
+	insertElement(&s1, 5);
+	insertElement(&s1, 100);
+	insertElement(&s1, 15);
+	insertElement(&s1, 90);
+	removeElement(&s1, 100);
+	cout << "\nSet 1 members = ";
+	displaySet(s1);
+	Set s2;
+	createSet(&s2, 8);
+	insertElement(&s2, 5);
+	insertElement(&s2, 45);
+	insertElement(&s2, 10);
+	insertElement(&s2, 15);
+	insertElement(&s2, 25);
+	insertElement(&s2, 17);
+	insertElement(&s2, 30);
+	cout << "\nSet 2 members = ";
+	displaySet(s2);
+	Set s3;
+	s3 = intersection(s1, s2);
+	cout << "\nIntersection of Set 1 and 2 = ";
+	displaySet(s3);
+	freeSet(&s1);
+	freeSet(&s2);
+	freeSet(&s3);
+	cout << endl;
+	return 0;
+}

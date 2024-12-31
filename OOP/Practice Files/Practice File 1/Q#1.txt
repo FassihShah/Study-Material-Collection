@@ -1,0 +1,24 @@
+#include<iostream>
+#include<fstream>
+using namespace std;
+double getFileSize(const char file[])
+{
+	ifstream ifs;
+	ifs.open(file);
+	double count = 0;
+	char ch;
+	while ((ch = ifs.get()) != EOF)
+	{
+		if (ch == '\n')
+		{
+			count = count + 1;
+		}
+		count = count + 1;
+	}
+	return count / 1024;
+}
+int main()
+{
+	cout << getFileSize("q1.txt") << " kbs";
+	return 0;
+}

@@ -1,0 +1,54 @@
+#include<iostream>
+#include"Book.h"
+#include"Magazine.h"
+using namespace std;
+void interface()
+{
+	int n;
+	cout << "\nHow many media items you want to create ? : ";
+	cin >> n;
+	Media** items;
+	items = new Media *[n];
+	for (int i = 0; i < n; i = i + 1)
+	{
+		int choice;
+		cout << "\nIf you want to create a book, Enter 1" << "\nIf you want to create a magazine, Enter 2\nEnter : ";
+		cin >> choice;
+		if (choice == 1)
+		{
+			String t, a, n;
+			cin.ignore();
+			cout << "\nWrite the title of the book : ";
+			t.input();
+			cout << "\nWrite the name of the author : ";
+			a.input();
+			cout << "\nWrite ISBN of the book : ";
+			n.input();
+			items[i] = new Book(t, a, n);
+		}
+		else
+		{
+			String t, m;
+			int y;
+			cin.ignore();
+			cout << "\nWrite the title of the magazine : ";
+			t.input();
+			cout << "\nWrite the publication month : ";
+			m.input();
+			cout << "\nWrite year of publication : ";
+			cin >> y;
+			items[i] = new Magazine(t, m, y);
+		}
+	}
+	cout << "\n\t\t-----------------------------------";
+	for (int i = 0; i < n; i = i + 1)
+	{
+		items[i]->display();
+	}
+	for (int i = 0; i < n; i = i + 1)
+	{
+		delete[] items[i];
+	}
+	delete[] items;
+	items = nullptr;
+}

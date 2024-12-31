@@ -1,0 +1,45 @@
+#include<iostream>
+using namespace std;
+class Number
+{
+	int number;
+	char st[22][25] = { "","one","two","three","four","five","six","seven","eight","nine","ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen","twenty" };
+	char gy[10][10] = { "twenty" ,"thirty","forty","fifty","sixty","seventy","eighty","ninety" };
+public:
+	void setNumber(int n)
+	{
+		number = n;
+	}
+	void printNumbersInWords()
+	{
+		int n = number;
+		if (n == 0)
+		{
+			cout << "zero";
+		}
+		if (n / 1000)
+		{
+			cout << st[n / 1000] << " thousand";
+			n = n % 1000;
+		}
+		if (n / 100)
+		{
+			cout << " " << st[n / 100] << " hundred";
+			n = n % 100;
+		}
+		if (n > 20)
+		{
+			cout << " " << gy[n / 10 - 2];
+			n = n % 10;
+		}
+		cout << " " << st[n];
+	}
+};
+int main()
+{
+	Number num;
+	num.setNumber(900);
+	num.printNumbersInWords();
+	cout << endl;
+	return 0;
+}

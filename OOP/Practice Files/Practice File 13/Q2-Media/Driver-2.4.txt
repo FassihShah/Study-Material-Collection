@@ -1,0 +1,56 @@
+#include"Shelf.h"
+using namespace std;
+void interface()
+{
+	int n;
+	cout << "\nHow many media items you want to create ? : ";
+	cin >> n;
+	Shelf s(n);
+	for (int i = 0; i < n; i++)
+	{
+		int choice;
+		cout << "\nIf you want to create a book, Enter 1" << "\nIf you want to create a magazine, Enter 2";
+		cout << "\nIf you want to create a CD, Enter 3\nEnter : ";
+		cin >> choice;
+		if (choice == 1)
+		{
+			String t, a, n;
+			cin.ignore();
+			cout << "\nWrite title of the book : ";
+			t.input();
+			cout << "\nWrite name of the author : ";
+			a.input();
+			cout << "\nWrite ISBN of the book : ";
+			n.input();
+			s.insert(new Book(t, a, n));
+		}
+		else if(choice == 2)
+		{
+			String t, m;
+			int y;
+			cin.ignore();
+			cout << "\nWrite title of the magazine : ";
+			t.input();
+			cout << "\nWrite publication month : ";
+			m.input();
+			cout << "\nWrite year of publication : ";
+			cin >> y;
+			s.insert(new Magazine(t, m, y));
+		}
+		else if (choice == 3)
+		{
+			String t;
+			int c;
+			cin.ignore();
+			cout << "\nWrite title of the CD : ";
+			t.input();
+			cout << "\nWrite capacity of CD in MBs : ";
+			cin >> c;
+			 s.insert(new CD(t, c));
+		}
+	}
+	cout << "\n\t\t-----------------------------------";
+	s.displayContents();
+	searchByYear(items, n);
+	s.~Shelf();
+}

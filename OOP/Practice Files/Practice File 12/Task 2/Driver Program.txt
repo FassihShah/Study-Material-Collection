@@ -1,0 +1,17 @@
+#include"CruiseShip.h"
+#include"CargoShip.h"
+#include"BattleShip.h"
+using namespace std;
+int main()
+{
+	Ship* ptr[4];
+	ptr[0] = new Ship("Ship", "1910");
+	ptr[1] = new CruiseShip("Cruise", "1934", 2000);
+	ptr[2] = new CargoShip("Cargo", "1932", 312);
+	ptr[3] = new BattleShip("Fighter", "2004", 50);
+	for (int i = 0; i < 4; i++)
+	{
+		ptr[i]->print();
+	}
+	return 0;
+}

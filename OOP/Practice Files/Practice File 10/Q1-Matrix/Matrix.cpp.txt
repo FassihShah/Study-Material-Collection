@@ -1,0 +1,158 @@
+#include <iostream>
+#include "Matrix.h"
+using namespace std;
+Matrix::Matrix()
+{
+	rows = 0;
+	cols = 0;
+	data = nullptr;
+}
+Matrix::Matrix(int r, int c):Matrix()
+{
+	if (c <= 0 || r <= 0)
+		return;
+	rows = r;
+	cols = c;
+	data = new int* [rows];
+	for (int i = 0; i < rows; i = i + 1)
+	{
+		data[i] = new int[cols];
+	}
+	for (int i = 0; i < rows; i = i + 1)
+	{
+		for (int j = 0; j < cols; j = j + 1)
+		{
+			data[i][j] = 0;
+		}
+	}
+}
+Matrix::~Matrix()
+{
+	if (data != nullptr)
+	{
+		for (int i = 0; i < rows; i = i + 1)
+		{
+			delete[] data[i];
+		}
+		delete[] data;
+		data = nullptr;
+	}
+}
+Matrix::Matrix(const Matrix& ref):Matrix()
+{
+	if (ref.data != nullptr)
+	{
+		rows = ref.rows;
+		cols = ref.cols;
+		data = new int* [rows];
+		for (int i = 0; i < rows; i = i + 1)
+		{
+			data[i] = new int[cols];
+		}
+		for (int i = 0; i < rows; i = i + 1)
+		{
+			for (int j = 0; j < cols; j = j + 1)
+			{
+				data[i][j] = ref.data[i][j];
+			}
+		}
+	}
+}
+int Matrix::getRows( ) const
+{ 
+	return rows;
+}
+int Matrix::getColums() const
+{
+	return cols;
+}
+int& Matrix:: at(int r, int c)
+{
+	return data[r - 1][c - 1];
+}
+const int& Matrix::at(int r, int c) const 
+{
+	return data[r - 1][c - 1];
+}
+void Matrix::display() const
+{
+	for (int i = 0; i < rows; i = i + 1)
+	{
+		for (int j = 0; j < cols; j = j + 1)
+		{
+			cout << data[i][j] << " ";
+		}
+		cout << '\n';
+	}
+}
+Matrix Matrix::transpose() const
+{
+	Matrix result(cols, rows);
+
+	for (int i = 0; i < cols; i = i + 1)
+	{
+		for (int j = 0; j < rows; j = j + 1)
+		{
+			result.data[i][j] = data[j][i];
+		}
+	}
+	return result;
+}
+Matrix Matrix::add(const Matrix& mat) const
+{
+	if (rows != mat.rows || cols != mat.cols)
+	{
+		return Matrix();
+	}
+	Matrix result(rows, cols);
+	for (int i = 0; i < rows; i = i + 1)
+	{
+		for (int j = 0; j < cols; j = j + 1)
+		{
+			result.data[i][j] = data[i][j] + mat.data[i][j];
+		}
+	}
+	return result;
+}
+Matrix Matrix::multiply(const Matrix& other) const
+{
+	if (cols != other.rows)
+	{
+		return Matrix();
+	}
+	Matrix result(rows, other.cols);
+	for (int i = 0; i < rows; i = i + 1)
+	{
+		for (int j = 0; j < other.cols; j = j + 1)
+		{
+			for (int k = 0; k < cols; k = k + 1)
+			{
+				result.data[i][j] = result.data[i][j] + (data[i][k] * other.data[k][j]);
+			}
+		}
+	}
+	return result;
+}
+void Matrix::reSize(int r, int c)
+{
+	if (r <= 0 || c <= 0)
+	{
+		return;
+	}
+	int** newData = new int* [r];
+	for (int i = 0; i < r; i = i + 1)
+	{
+		newData[i] = new int[c];
+	}
+	for (int i = 0; (i < rows && i < r); i = i + 1)
+	{
+		for (int j = 0; (j < cols && j < c); j = j + 1)
+		{
+			newData[i][j] = data[i][j];
+		}
+	}
+	this->~Matrix();
+	rows = r;
+	cols = c;
+	data = newData;
+}

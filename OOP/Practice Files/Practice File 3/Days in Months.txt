@@ -1,0 +1,39 @@
+#include<iostream>
+using namespace std;
+class DayOfYear
+{
+	int day;
+	char month[12][15] = { "January","February","March","April","May","June","July","August","September","October","November","December" };
+	int days[12] = { 31,28,31,30,31,30,31,31,30,31,30,31 };
+public:
+	void setDay(int d)
+	{
+		day = d;
+	}
+	void printMonthDay()
+	{
+		int count = 1;
+		bool status = true;
+		while (status)
+		{
+			if (days[count - 1] >= day)
+			{
+				status = false;
+			}
+			else
+			{
+				day = day - days[count - 1];
+				count = count + 1;
+			}
+		}
+		cout << month[count - 1] << " " << day;
+	}
+};
+int main()
+{
+	DayOfYear D;
+	D.setDay(1);
+	D.printMonthDay();
+	cout << endl;
+	return 0;
+}

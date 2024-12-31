@@ -1,0 +1,54 @@
+`strtok` is not a C++ function; it's a C library function for parsing strings. However, it can be used in C++ programs as well.
+
+Here's a simple and detailed explanation of `strtok`:
+
+1. *Tokenization*: `strtok` stands for "string tokenization." It's used to break a string into smaller parts, or tokens, based on a specified delimiter.
+
+2. *Function Signature*:
+   c
+   char* strtok(char* str, const char* delimiter);
+   
+
+   - `str`: This is the input string you want to tokenize. On the first call to `strtok`, you pass the string you want to tokenize. On subsequent calls, you pass `NULL` to continue tokenizing the same string.
+   - `delimiter`: This is a string containing one or more characters that act as delimiters. `strtok` will use these delimiters to split the input string into tokens.
+
+3. *How it works*:
+   - The first time you call `strtok`, you pass the string you want to tokenize as the `str` argument and the delimiter as the `delimiter` argument.
+   - It returns a pointer to the first token found in the input string.
+   - It replaces the delimiter in the original string with a null character ('\0') to terminate the token.
+   - Subsequent calls to `strtok` with `NULL` as the `str` argument will continue from where it left off, searching for the next token in the original string.
+
+4. *Example*:
+   c
+   #include <iostream>
+   #include <cstring>
+
+   int main() {
+       char str[] = "Hello, World! This is a test.";
+       const char* delimiter = " ,.!";
+
+       char* token = strtok(str, delimiter);
+       while (token != NULL) {
+           std::cout << token << std::endl;
+           token = strtok(NULL, delimiter);
+       }
+
+       return 0;
+   }
+   
+
+   Output:
+   
+   Hello
+   World
+   This
+   is
+   a
+   test
+   
+
+   In this example, the `strtok` function splits the input string `str` into tokens using the characters `,`, ` `, `.`, and `!` as delimiters.
+
+5. *Important Notes*:
+   - `strtok` is not thread-safe, meaning it should not be used in a multithreaded program without proper synchronization.
+   - If you need a more C++-style approach to string parsing, consider using the `std::istringstream` class or other C++ string manipulation functions provided by the `<string>` library.

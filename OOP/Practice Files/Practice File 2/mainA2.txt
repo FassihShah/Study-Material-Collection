@@ -1,0 +1,44 @@
+#include<iostream>
+#include"SetA2.h"
+using namespace std;
+int main()
+{
+	int* set1;
+	int cap1 = 10;
+	int NOE1 = 0;
+	createSet(&set1, cap1);
+	insertElement(set1, cap1, &NOE1, 10);
+	insertElement(set1, cap1, &NOE1, 5);
+	insertElement(set1, cap1, &NOE1, 50);
+	insertElement(set1, cap1, &NOE1, 5);
+	insertElement(set1, cap1, &NOE1, 15);
+	insertElement(set1, cap1, &NOE1, 100);
+	insertElement(set1, cap1, &NOE1, 90);
+	removeElement(set1, cap1, &NOE1, 100);
+	cout << "\nSet 1 members = ";
+	displaySet(set1, NOE1);
+	int* set2;
+	int cap2 = 8;
+	int NOE2 = 0;
+	createSet(&set2, cap2);
+	insertElement(set2, cap2, &NOE2, 45);
+	insertElement(set2, cap2, &NOE2, 5);
+	insertElement(set2, cap2, &NOE2, 17);
+	insertElement(set2, cap2, &NOE2, 25);
+	insertElement(set2, cap2, &NOE2, 15);
+	insertElement(set2, cap2, &NOE2, 30);
+	insertElement(set2, cap2, &NOE2, 10);
+	cout << "\nSet 2 members = ";
+	displaySet(set2, NOE2);
+	int* set3;
+	int cap3 = 0;
+	int NOE3 = 0;
+	set3 = intersection(set1, NOE1, set2, NOE2, NOE3);
+	cout << "\nIntersection of set 1 and 2 is = ";
+	displaySet(set3, NOE3);
+	freeSet(&set1);
+	freeSet(&set2);
+	freeSet(&set3);
+	cout << endl;
+	return 0;
+}

@@ -1,0 +1,93 @@
+#include<iostream>
+#include"Book.h"
+#include"Magazine.h"
+#include"CD.h"
+using namespace std;
+void searchByYear(Media** items, int size)
+{
+	int year, cnt = 0;
+	cout << "\n\nEnter the year you want to see magazines : ";
+	cin >> year;
+	for (int i = 0; i < size; i = i + 1)
+	{
+		if (dynamic_cast<Magazine*>(items[i]))
+		{
+			if (((Magazine*)items[i])->getYear() == year)
+			{
+				cnt++;
+				items[i]->display();
+			}
+		}
+	}
+	if (cnt == 0)
+		cout << "\nNo Magazine found!";
+}
+void interface()
+{
+	int n;
+	cout << "\nHow many media items you want to create ? : ";
+	cin >> n;
+	Media** items;
+	items = new Media *[n];
+	for (int i = 0; i < n; i = i + 1)
+	{
+		int choice;
+		cout << "\nIf you want to create a book, Enter 1" << "\nIf you want to create a magazine, Enter 2";
+		cout << "\nIf you want to create a CD, Enter 3\nEnter : ";
+		cin >> choice;
+		if (choice == 1)
+		{
+			String t, a, n;
+			cin.ignore();
+			cout << "\nWrite title of the book : ";
+			t.input();
+			cout << "\nWrite name of the author : ";
+			a.input();
+			cout << "\nWrite ISBN of the book : ";
+			n.input();
+			items[i] = new Book(t, a, n);
+		}
+		else if(choice == 2)
+		{
+			String t, m;
+			int y;
+			cin.ignore();
+			cout << "\nWrite title of the magazine : ";
+			t.input();
+			cout << "\nWrite publication month : ";
+			m.input();
+			cout << "\nWrite year of publication : ";
+			cin >> y;
+			items[i] = new Magazine(t, m, y);
+		}
+		else if (choice == 3)
+		{
+			String t;
+			int c;
+			cin.ignore();
+			cout << "\nWrite title of the CD : ";
+			t.input();
+			cout << "\nWrite capacity of CD in MBs : ";
+			cin >> c;
+			items[i] = new CD(t, c);
+		}
+	}
+	cout << "\n\t\t-----------------------------------";
+	for (int i = 0; i < n; i = i + 1)
+	{
+		items[i]->display();
+	}
+	searchByYear(items, n);
+	for (int i = 0; i < n; i = i + 1)
+	{
+		delete[] items[i];
+	}
+	delete[] items;
+	items = nullptr;
+}
+int main()
+{
+	interface();
+	cout << endl;
+	return 0;
+}

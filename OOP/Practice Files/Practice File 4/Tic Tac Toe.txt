@@ -1,0 +1,190 @@
+#include<iostream>
+using namespace std;
+enum PlayerTurn{FIRST_PLAYER=1,SECOND_PLAYER=2};
+enum GameStatus{DRAW,WIN,IN_PROGRESS};
+class GameBoard
+{
+	char arr[3][3];
+	int validMovesCount = 0;
+	void giveArrayAddress(int& a, int& b, char pos)
+	{
+		int count = 49;
+		for (int i = 0; i <= 2; i = i + 1)
+		{
+			for (int j = 0; j <= 2; j = j + 1, count = count + 1)
+			{
+				if (count == pos)
+				{
+					a = i;
+					b = j;
+				}
+			}
+		}
+	}
+	bool checkWinStatus()
+	{
+		bool s = false;
+		if ((arr[0][0] == arr[1][1] && arr[1][1] == arr[2][2]) || (arr[0][2] == arr[1][1] && arr[1][1] == arr[2][0]) || (arr[1][0] == arr[1][1] && arr[1][1] == arr[1][2]) || (arr[0][1] == arr[1][1] && arr[1][1] == arr[2][2]))
+		{
+			s = true;
+		}
+		else if ((arr[0][0] == arr[1][0] && arr[1][0] == arr[2][0]) || (arr[0][0] == arr[0][1] && arr[0][1] == arr[0][2]))
+		{
+			s = true;
+		}
+		else if ((arr[2][2] == arr[1][2] && arr[1][2] == arr[0][2]) || (arr[2][2] == arr[2][1] && arr[2][1] == arr[2][0]))
+		{
+			s = true;
+		}
+		return s;
+	}
+public:
+	GameBoard()
+	{
+		int count = 49;
+		for (int i = 0; i<=2; i = i + 1)
+		{
+			for (int j = 0; j <= 2; j = j + 1, count = count + 1)
+			{
+				arr[i][j] = count;
+			}
+		}
+	}
+	void displayBoard()
+	{
+		for (int i = 0; i <= 2; i = i + 1)
+		{
+			for (int j = 0; j <= 2; j = j + 1)
+			{
+				cout << arr[i][j];
+				cout << " ";
+			}
+			cout << endl;
+		}
+	}
+	void markBoard(char pos, char playerSymbol)
+	{
+		int i, j;
+		giveArrayAddress(i, j, pos);
+		arr[i][j] = playerSymbol;
+		validMovesCount = validMovesCount + 1;
+	}
+	bool isValidPosition(char pos)
+	{
+		if (pos >= 1 && pos <= 9 )
+		{
+			cout << '\n' << (int)pos;
+			return true;
+		}
+		return false;
+	}
+	bool isAlreadyMarked(char pos)
+	{
+		int i, j;
+		giveArrayAddress(i, j, pos);
+		if (arr[i][j] >= 49 && arr[i][j] <= 57)
+		{
+			cout << "\n" << arr[i][j];
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+	int getValidMovesCount()
+	{
+		return validMovesCount;
+	}
+	GameStatus getGameStatus()
+	{
+		GameStatus status = IN_PROGRESS;
+		if (checkWinStatus())
+		{
+			status = WIN;
+		}
+		else if (validMovesCount == 9)
+		{
+			status = DRAW;
+		}
+		return status;
+	}
+};
+class TicTacToe
+{
+	char player1Symbol;
+	char player2Symbol;
+	GameBoard board;
+public:
+	void playGame()
+	{
+		PlayerTurn currentPlayer = FIRST_PLAYER;
+		GameStatus gameStatus = IN_PROGRESS;
+		int pos;
+		bool isValidSymbol;
+		board.displayBoard();
+		do
+		{
+			cout << "\nEnter Player 1 Symbol : ";
+			cin >> player1Symbol;
+			if (player1Symbol >= 1 && player1Symbol <= 9)
+			{
+				isValidSymbol = false;
+			}
+			else
+			{
+				isValidSymbol = true;
+			}
+		} while (!isValidSymbol);
+		do
+		{
+			cout << "\nEnter Player 2 Symbol : ";
+			cin >> player2Symbol;
+			if (player2Symbol >= 1 && player2Symbol <= 9 || player2Symbol==player1Symbol)
+			{
+				isValidSymbol = false;
+			}
+			else
+			{
+				isValidSymbol = true;
+			}
+		} while (!isValidSymbol);
+		char currentSymbol = player1Symbol;
+		while (gameStatus == IN_PROGRESS)
+		{
+			bool status = false;
+			board.displayBoard();
+			do
+			{
+				cout << "\nPlayer " << currentPlayer << " turn, Enter position : ";
+				cin >> pos;
+				if (board.isValidPosition((char)pos) && !board.isAlreadyMarked((char)pos))
+				{
+					board.markBoard((char)pos, currentSymbol);
+					status = true;
+				}
+			} while (!status);
+			gameStatus = board.getGameStatus();
+			if (gameStatus == WIN)
+			{
+				cout << "\nPlayer " << currentPlayer << " WON !";
+			}
+			else if(gameStatus==DRAW)
+			{
+				cout << "\nGame has DRAWN";
+			}
+			else
+			{
+				currentSymbol = (currentPlayer == FIRST_PLAYER? player2Symbol : player1Symbol);
+				currentPlayer = (currentPlayer == FIRST_PLAYER ? SECOND_PLAYER : FIRST_PLAYER);
+			}
+		}
+	}
+};
+int main()
+{
+	TicTacToe t;
+	t.playGame();
+	cout << endl;
+	return 0;
+}

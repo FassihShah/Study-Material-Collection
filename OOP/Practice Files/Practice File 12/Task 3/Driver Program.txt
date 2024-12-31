@@ -1,0 +1,12 @@
+#include"DepositAccount.h"
+#include"LoanAccount.h"
+#include"MortgageAccount.h"
+int main()
+{
+	DepositAccount a(Account::INDIVIDUAL, 209, 14);
+	LoanAccount b(Account::INDIVIDUAL, 209, 14);
+	MortgageAccount c(Account::INDIVIDUAL, 209, 14);
+	Account* ptr = &a;
+	cout << ptr->calculateInterest(10);
+	return 0;
+}

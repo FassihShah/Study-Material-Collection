@@ -1,0 +1,47 @@
+#include<iostream>
+#include<fstream>
+using namespace std;
+int getFileLenght(const char file[])
+{
+	ifstream ifs;
+	ifs.open(file);
+	int count = 0;
+	char ch;
+	while (ch = ifs.get() != EOF)
+	{
+		count = count + 1;
+	}
+	ifs.close();
+	return count;
+}
+bool areFilesEqual(const char firstFile[], const char secondFile[])
+{
+	ifstream ifs1, ifs2;
+	ifs1.open(firstFile);
+	ifs2.open(secondFile);
+	char ch1, ch2;
+	bool status = true;
+	if (getFileLenght("q2-1.txt") == getFileLenght("q2-2.txt"))
+	{
+		while ((ch1 = ifs1.get()) != EOF && (ch2 = ifs2.get()) != EOF && status)
+		{
+			if (ch1 != ch2)
+			{
+				status = false;
+			}
+		}
+	}
+	else
+	{
+		status = false;
+	}
+	ifs1.close();
+	ifs2.close();
+	return status;
+}
+int main()
+{
+	cout << areFilesEqual("q2-1.txt", "q2-2.txt");
+	cout << endl;
+	return 0;
+}

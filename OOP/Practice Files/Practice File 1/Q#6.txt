@@ -1,0 +1,91 @@
+#include<iostream>
+#include<fstream>
+using namespace std;
+struct Matrix
+{
+	int** mat;
+	int rows;
+	int cols;
+};
+void createMatrix(Matrix& a)
+{
+	a.mat = new int* [a.rows];
+	for (int i = 0; i < a.rows; i = i + 1)
+	{
+		a.mat[i] = new int[a.cols];
+	}
+}
+Matrix multiplyMatrix(Matrix m1, Matrix m2)
+{
+	if (m1.cols != m2.rows)
+	{
+		cout << "Multiplication is Not Possible.";
+		exit(0);
+	}
+	Matrix result;
+	result.rows = m1.rows;
+	result.cols = m2.cols;
+	createMatrix(result);
+	for (int i = 0; i < m1.rows; i = i + 1)
+	{
+		for (int j = 0; j < m2.cols; j = j + 1)
+		{
+			result.mat[i][j] = 0;
+			for (int k = 0; k < m2.rows; k = k + 1)
+			{
+				result.mat[i][j] = result.mat[i][j] + (m1.mat[i][k] * m2.mat[k][j]);
+			}
+		}
+	}
+	return result;
+}
+void createArray(ifstream& ifs)
+{
+	char ch;
+	Matrix m1,m2,result;
+	ifs >> m1.rows;
+	ifs >> m1.cols;
+	createMatrix(m1);
+	for (int i = 0; i < m1.rows; i = i + 1)
+	{
+		for (int j = 0; j < m2.cols; j = j + 1)
+		{
+			ifs >> m1.mat[i][j];
+			ch = ifs.get();
+		}
+	}
+	createMatrix(m2);
+	ifs >> m2.rows;
+	ifs >> m2.cols;
+	for (int i = 0; i < m2.rows; i = i + 1)
+	{
+		for (int j = 0; j < m2.cols; j = j + 1)
+		{
+			ifs >> m2.mat[i][j];
+			ch = ifs.get();
+		}
+	}
+	result = multiplyMatrix(m1, m2);
+	ofstream ofs;
+	ofs.open("result.txt");
+	ofs << result.rows;
+	ofs << " ";
+	ofs << result.cols << "\n";
+	for (int i = 0; i < result.rows; i = i + 1)
+	{
+		for (int j = 0; j < result.cols; j = j + 1)
+		{
+			ofs << result.mat[i][j];
+			ofs << " ";
+			ch = ifs.get();
+		}
+		ofs << "\n";
+	}
+}
+int main()
+{
+	ifstream ifs;
+	ifs.open("q6.txt");
+	createArray(ifs);
+	return 0;
+}

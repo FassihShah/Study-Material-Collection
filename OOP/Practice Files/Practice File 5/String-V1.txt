@@ -1,0 +1,330 @@
+#include<iostream>
+using namespace std;
+class String
+{
+	int size;
+	char* data;
+	void copyString(char* const dest, const char* const src)
+	{
+		int i = 0;
+		while (src[i] != '\0')
+		{
+			dest[i] = src[i];
+			i = i + 1;
+		}
+		dest[i] = '\0';
+	}
+	bool isSubString(const char* destination, const char* key, int start = 0)
+	{
+		int  j = 0, lenght = tellLenght(key), end = start + lenght;
+		while (start < end)
+		{
+			if (destination[start] == key[j])
+			{
+				j = j + 1;
+			}
+			else
+			{
+				j = 0;
+			}
+			start = start + 1;
+		}
+		return j == lenght ? true : false;
+	}
+	int tellLenght(const char* const src)
+	{
+		int i = 0;
+		if (src == nullptr)
+		{
+			return 0;
+		}
+		while (src[i] != '\0')
+		{
+			i = i + 1;
+		}
+		return i;
+	}
+public:
+	String()
+	{
+		data = nullptr;
+		size = 0;
+	}
+	String(char c)
+	{
+		data = new char[2];
+		size = 1;
+		data[0] = c;
+		data[1] = '\0';
+	}
+	String(const char* src) :String()
+	{
+		size = tellLenght(src);
+		if (size == 0)
+		{
+			return;
+		}
+		data = new char[size + 1];
+		copyString(data, src);
+	}
+	int getLenght()
+	{
+		return tellLenght(data);
+	}
+	void display()
+	{
+		cout << endl;
+		if (data == nullptr)
+		{
+			return;
+		}
+		for (int i = 0; i <= getLenght(); i = i + 1)
+		{
+			cout << data[i];
+		}
+	}
+	void reSize(int cap)
+	{
+		if (cap <= 0)
+		{
+			this->~String();
+			return;
+		}
+		char* temp = new char[cap + 1];
+		if (cap > size)
+		{
+			copyString(temp, data);
+		}
+		else
+		{
+			for (int i = 0; i < cap; i = i + 1)
+			{
+				temp[i] = data[i];
+			}
+			temp[cap] = '\0';
+		}
+		size = cap;
+		data = temp;
+	}
+	void insert(int index, String* subStr)
+	{
+		int lenght = getLenght(), subLenght = subStr->getLenght(), count = 0;
+		if (size < lenght + subLenght)
+		{
+			reSize(lenght + subLenght);
+		}
+		char* temp = new char[lenght - index + 1];
+		for (int i = index; i < lenght; i = i + 1)
+		{
+			temp[count] = data[i];
+			count = count + 1;
+		}
+		temp[count] = '\0';
+		count = 0;
+		while (count < subLenght)
+		{
+			data[index] = subStr->data[count];
+			index = index + 1;
+			count = count + 1;
+		}
+		count = 0;
+		while (temp[count] != '\0')
+		{
+			data[index] = temp[count];
+			index = index + 1;
+			count = count + 1;
+		}
+		data[index] = '\0';
+	}
+	void remove(int index, int count = 1)
+	{
+		int lenght = getLenght();
+		while (index < lenght - count)
+		{
+			data[index] = data[index + count];
+			index = index + 1;
+		}
+		data[index] = '\0';
+	}
+	char& at(int index)
+	{
+		if (index >= 0 && index < size)
+		{
+			return data[index];
+		}
+		cout << "\nIndex is out of bound";
+		exit(0);
+	}
+	bool isEmpty()
+	{
+		if (data == nullptr)
+		{
+			return true;
+		}
+		return false;
+	}
+	int getSize()
+	{
+		return size;
+	}
+	int find(String* subStr, int start = 0)
+	{
+		int j = 0, lenght = subStr->getLenght(), count = 0;
+		bool status = true;
+		while (data[start] != '\0')
+		{
+			if ((isSubString(data, subStr->data, start)) == 1)
+			{
+				status = false;
+				count = count + 1;
+			}
+			start = start + 1;
+		}
+		return count;
+	}
+	int replace(String* old, String* newSubStr)
+	{
+		int repet = find(old), subLenght = newSubStr->getLenght();
+		int oldLenght = old->getLenght(), index = 0;
+		if (repet == 0)
+		{
+			exit(0);
+		}
+		for (int i = 0; i < size; i = i + 1)
+		{
+			if (isSubString(data, old->data, index))
+			{
+				remove(index, oldLenght);
+				insert(index, newSubStr);
+				index = index + subLenght;
+			}
+			else
+			{
+				index = index + 1;
+			}
+		}
+	}
+	void trimLeft()
+	{
+		int index = 0, i = 0;
+		while (data[index] == '\t' || data[index] == ' ' || data[index] == '\n')
+		{
+			index = index + 1;
+		}
+		if (index == 0)
+			return;
+		for (; index < getLenght(); i = i + 1, index = index + 1)
+		{
+			data[i] = data[index];
+		}
+		data[i] = '\0';
+	}
+	void trimRight()
+	{
+		int index = getLenght() - 1;
+		while (data[index] == '\t' || data[index] == ' ' || data[index] == '\n')
+		{
+			index = index - 1;
+		}
+		if (index == getLenght() - 1)
+			return;
+		data[index + 1] = '\0';
+	}
+	void trim()
+	{
+		trimLeft();
+		trimRight();
+	}
+	void shrink()
+	{
+		reSize(getLenght());
+	}
+	void makeUpper()
+	{
+		for (int i = 0; i < getLenght(); i = i + 1)
+		{
+			if (data[i] >= 'a' && data[i] <= 'z')
+			{
+				data[i] = data[i] - 32;
+			}
+		}
+	}
+	void makeLower()
+	{
+		for (int i = 0; i < getLenght(); i = i + 1)
+		{
+			if (data[i] >= 'A' && data[i] <= 'Z')
+			{
+				data[i] = data[i] + 32;
+			}
+		}
+	}
+	void reverse()
+	{
+		char* temp = new char[size];
+		int i, j;
+		for (i = 0, j = getLenght() - 1; j >= 0; i = i + 1, j = j - 1)
+		{
+			temp[i] = data[j];
+		}
+		temp[getLenght()] = '\0';
+		data = temp;
+	}
+	int compare(String& s2)
+	{
+		int lenght1 = getLenght(), lenght2 = s2.getLenght(), count = 0, sum;
+		bool status = true;
+		while ((count < lenght1 && count < lenght2) && status)
+		{
+			sum = data[count] - s2.data[count];
+			status = (sum==0 ? true : false);
+			count = count + 1;
+		}
+		if (status == true)
+		{
+			if (lenght2 == lenght1)
+			{
+				return 0;
+			}
+			else if (count == lenght2)
+			{
+				return 1;
+			}
+			else
+			{
+				return -1;
+			}
+		}
+		if (sum > 0)
+		{
+			return 1;
+		}
+		return -1;
+	}
+	void input()
+	{
+		char ch;
+		do
+		{
+			int s;
+			s = (size == 0 ? 1 : (size - 1) * 2);
+			char* temp = new char[s];
+			cout << "You can give " << s << " lenght input : ";
+			cin.getline(temp, s );
+			if (getLenght() + tellLenght(temp) >= size)
+			{
+				reSize(s);
+			}
+			int i, j;
+			for (i = 0, j = getLenght(); i < tellLenght(temp); i = i + 1, j = j + 1)
+			{
+				data[j] = temp[i];
+			}
+			data[j] = '\0';
+			cout << "Press \"Y\" if you want to give input again : ";
+			cin >> ch;
+			cin.ignore();
+		} 
+		while (ch == 'Y');
+	}
+};

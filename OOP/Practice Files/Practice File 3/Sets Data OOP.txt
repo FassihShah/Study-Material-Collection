@@ -1,0 +1,94 @@
+#include<iostream>
+using namespace std;
+class Set
+{
+	int* data;
+	int NOE;
+	int size;
+public:
+	void createSet(int s)
+	{
+		size = s;
+		NOE = 0;
+		data = new int[size];
+	}
+	void addElement(int element)
+	{
+		data[NOE] = element;
+		NOE = NOE + 1;
+	}
+	void printSet()
+	{
+		cout << "{ ";
+		for (int i = 0; i < NOE - 1; i = i + 1)
+		{
+			cout << data[i] << ", ";
+		}
+		cout << data[NOE - 1] << " }";
+	}
+	Set unionOfSets(Set* b)
+	{
+		int count = 0;
+		for (int i = 0; i < NOE; i = i + 1)
+		{
+			for (int j = 0; j < (*b).NOE; j = j + 1)
+			{
+				if (data[i] == b->data[j])
+				{
+					count = count + 1;
+				}
+			}
+		}
+		int i = 0;
+		count = (NOE + (*b).NOE - count);
+		Set unSet;
+		unSet.createSet(count);
+		unSet.NOE = count;
+		bool present;
+		while (i < NOE)
+		{
+			(unSet.data)[i] = data[i];
+			i = i + 1;
+		}
+		for (int j = 0; j < (*b).NOE; j = j + 1)
+		{
+			present = false;
+			for (int k = 0; k < NOE; k = k + 1)
+			{
+				if (b->data[j] == data[k])
+				{
+					present = true;
+				}
+			}
+			if (present == false)
+			{
+				unSet.data[i] = b->data[j];
+				i = i + 1;
+			}
+		}
+		return unSet;
+	}
+};
+int main()
+{
+	Set A, B;
+	A.createSet(10);
+	B.createSet(10);
+	A.addElement(3);
+	A.addElement(4);
+	A.addElement(7);
+	A.addElement(9);
+	A.printSet();
+	B.addElement(13);
+	B.addElement(34);
+	B.addElement(6);
+	B.addElement(2);
+	cout << endl;
+	B.printSet();
+	Set ABunion;
+	ABunion = A.unionOfSets(&B);
+	cout << endl;
+	ABunion.printSet();
+	cout << endl;
+	return 0;
+}

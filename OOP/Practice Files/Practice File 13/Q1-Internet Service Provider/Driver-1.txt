@@ -1,0 +1,14 @@
+#include<iostream>
+#include"Hacker.h"
+#include"ChatRoom.h"
+using namespace std;
+int main()
+{
+	Customer c("Fassih", 48, 10);
+	Hacker h("Fassih", 48, 10);
+	ChatRoom r("Fassih", 90);
+	cout << endl << c.computeBill();
+	cout << endl << h.computeBill();
+	cout << endl << r.computeBill();
+	return 0;
+}

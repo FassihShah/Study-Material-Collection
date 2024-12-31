@@ -1,0 +1,105 @@
+#include<iostream>
+#include<iomanip>
+using namespace std;
+class Time
+{
+	int hour;
+	int minute;
+	int second;
+public:
+	void setHour(int h = 1)
+	{
+		if (h >= 0 && h < 24)
+		{
+			hour = h;
+		}
+	}
+	void setMinute(int m)
+	{
+		if (m >= 0 && m < 60)
+		{
+			minute = m;
+		}
+	}
+	void setSecond(int s)
+	{
+		if (s >= 0 && s < 60)
+		{
+			second = s;
+		}
+	}
+	void setTime(int h, int m, int s)
+	{
+		setHour(h);
+		setMinute(m);
+		setSecond(s);
+	}
+	int getHour()
+	{
+		return hour;
+	}
+	int getMinute()
+	{
+		return minute;
+	}
+	int getSecond()
+	{
+		return second;
+	}
+	void incHour(int h = 1)
+	{
+		hour = (hour + h) % 24;
+	}
+	void incMinute(int m = 1)
+	{
+		incHour((minute + m) / 60);
+		minute = (minute + m) % 60;
+	}
+	void incSecond(int s = 1)
+	{
+		incMinute((second + s) / 60);
+		second = (second + s) % 60;
+	}
+	void printTwentyFourHourFormat()
+	{
+		cout << setw(2) << setfill('0') << hour << ":";
+		cout << setw(2) << minute << ":";
+		cout << setw(2) << second;
+	}
+	void printTwelveHourFormat()
+	{
+		int h = hour;
+		char bound = 65;
+		if (hour > 12)
+		{
+			h = h - 12;
+			bound = 80;
+		}
+		else if (hour == 12)
+		{
+			bound = 80;
+		}
+		else if (hour == 0)
+		{
+			h = 12;
+		}
+		cout << setw(2) << setfill('0') << h << ":";
+		cout << setw(2) << minute << ":";
+		cout << setw(2) << second << " " << bound << "M";
+	}
+};
+int main()
+{
+	Time t;
+	t.setTime(23, 59, 59);
+	t.printTwentyFourHourFormat();
+	cout << endl;
+	t.printTwelveHourFormat();
+	t.incHour(2);
+	cout << endl;
+	t.printTwentyFourHourFormat();
+	cout << endl;
+	t.printTwelveHourFormat();
+	cout << endl;
+	return 0;
+}

@@ -1,0 +1,29 @@
+#include<iostream>
+#include<fstream>
+using namespace std;
+void readCommaSeparatedNums(const char file[])
+{
+	ifstream ifs;
+	ifs.open(file);
+	int a;
+	char ch;
+	ifs >> a;
+	cout << a << " ";
+	while (!ifs.eof())
+	{
+		ch = ifs.get();
+		if (ch == ',')
+		{
+			ifs >> a;
+			if (!ifs.eof())
+			{
+				cout << a << " ";
+			}
+		}
+	}
+}
+int main()
+{
+	readCommaSeparatedNums("q5.txt");
+	return 0;
+}

@@ -1,0 +1,30 @@
+#include<iostream>
+#include<fstream>
+using namespace std;
+void flipAphabets(const char file[])
+{
+	fstream fs1, fs2;
+	fs1.open(file);
+	fs2.open(file);
+	char ch;
+	while ((ch = fs1.get()) != EOF)
+	{
+		if ((int)ch >= 65 && (int)ch <= 90)
+		{
+			ch = ch + 32;
+		}
+		else if ((int)ch >= 97 && (int)ch <= 122)
+		{
+			ch = ch - 32;
+		}
+		fs2 << ch;
+	}
+	fs2.close();
+	fs1.close();
+}
+int main()
+{
+	flipAphabets("q4.txt");
+	cout << endl;
+	return 0;
+}

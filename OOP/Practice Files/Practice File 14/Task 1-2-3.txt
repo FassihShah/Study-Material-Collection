@@ -1,0 +1,53 @@
+#include<iostream>
+#include"String.h"
+#include"GenericArray.h"
+using namespace std;
+template<typename T>
+void mySwap(T* a, T* b)
+{
+	T temp = *a;
+	*a = *b;
+	*b = temp;
+}
+template<typename T>
+void myGenericSort(T* arr, int size)
+{
+	for (int i = 1; i < size; i++)
+	{
+		T key = arr[i];
+		for (int j = 0; j <= i - 1; j++)
+		{
+			if (arr[j] > key)
+				mySwap(&arr[j], &arr[i]);
+		}
+	}
+}
+using namespace std;
+int main()
+{
+	//2-D Array
+	Array<Array<int>> arr1{ {1,2,3},{4,5,6} };
+	for (int i = 0; i < arr1.getSize(); i++)
+	{
+		for (int j = 0; i < arr1[i].getSize(); j++)
+		{
+			cout << arr1[i][j] << "\t";
+		}
+		cout << "\n";
+	}
+	//3-D Array Using initializer list 
+	Array<Array<Array<int>>> arr2{{ {1,2,3},{4,5,6} }, { {7,8,9},{10,11,12} }};
+	for (int i = 0; i < arr2.getSize(); i++)
+	{
+		for (int j = 0; j < arr2[i].getSize(); j++)
+		{
+			for (int k = 0; k < arr2[i][j].getSize(); k++)
+			{
+				cout << arr2[i][j][k] << "\t";
+			}
+			cout << "\n";
+		}
+	}
+	cout << endl;
+	return 0;
+}
