@@ -1,0 +1,149 @@
+#include<iostream>
+using namespace std;
+void databaseApp();
+int main()
+{
+	databaseApp();
+	cout << endl;
+	return 0;
+}
+bool isUnique(int array[],int cnt,int index)
+{
+	bool uniqueStatus = true;
+	int i = 0;
+	while (uniqueStatus == true && i < index)
+	{
+		if (array[i] == array[cnt] && i!=cnt)
+		{
+			uniqueStatus = false;
+		}
+		i = i + 1;
+	}
+	return uniqueStatus;
+}
+void searchRecord(int rollNo[], float cgpa[],int index)
+{
+	int num;
+	cout << "Enter the number of student : ";
+	cin >> num;
+	while ( num >= index)
+	{
+		cout << "You entered invalid number! Kindly enter valid number : ";
+		cin >> num;
+	}
+	cout << "Roll no. of " << num << " student is : " << rollNo[num] << endl;;
+	cout << "cgpa of " << num << " student is : " << cgpa[num] << endl;
+}
+void filterSearch(int rollNo[], float cgpa[], int index)
+{
+	int num1, num2;
+	cout << "Enter the numbers between which you want record : ";
+	cin >> num1;
+	while ( num1 >= index)
+	{
+		cout << "You entered invalid number! Kindly enter valid number : ";
+		cin >> num1;
+	}
+	cin >> num2;
+	while ( num2 >= index)
+	{
+		cout << "You entered invalid number! Kindly enter valid number : ";
+		cin >> num2;
+	}
+	while(num1 <= num2)
+	{
+		cout << "Roll no. of " << num1 << " student is : " << rollNo[num1] << endl;
+		cout << "cgpa of " << num1 << " student is : " << cgpa[num1] << endl;
+		num1 = num1 + 1;
+	}
+}
+void deleteRecord(int rollNo[], float cgpa[], int* index)
+{
+	int ind, end ;
+	cout << "Enter the number of student whose record you want to delete : ";
+	cin >> ind;
+	end = ind + 1;
+	while ( ind >= *index)
+	{
+		cout << "You entered invalid number! Kindly enter valid number : ";
+		cin >> ind;
+	}
+	while (end != *index)
+	{
+		rollNo[ind] = rollNo[end];
+		cgpa[ind] = cgpa[end];
+		ind = end;
+		end = end + 1;
+	}
+	*index = *index - 1;
+}
+void updateRecord(int rollNo[], float cgpa[], int index)
+{
+	int roll;
+	cout << "Enter number of student which you want to update : ";
+	cin >> roll;
+	while ( roll >= index)
+	{
+		cout << "You entered invalid number! Kindly enter valid number : ";
+		cin >> roll;
+	}
+	cout << "Enter " << roll << " student roll no. : ";
+	cin >> rollNo[roll];
+	while (isUnique(rollNo, roll,index) == 0)
+	{
+		cout << "You entered a roll no. which is already added ! Kindly enter a valid roll no. : ";
+		cin >> rollNo[roll];
+	}
+	cout << "Enter cgpa of " << roll << " student : ";
+	cin >> cgpa[roll];
+}
+void addRecord(int rollNo[], float cgpa[], int* index)
+{
+	cout << "Enter roll no. : ";
+	cin >> rollNo[*index];
+	while (isUnique(rollNo, *index,*index) == 0)
+	{
+		cout << "You entered a roll no. which is already added ! Kindly enter a valid roll no. : ";
+		cin >> rollNo[*index];
+	}
+	cout << "Enter cgpa : ";
+	cin >> cgpa[*index];
+	*index = *index + 1;
+}
+void databaseApp()
+{
+	int rollNo[50],choice,index=1;
+	float cgpa[50];
+	cout << "\t\t\t\tDATABASE APP\t\t\t\t\n\n";
+	do
+	{
+		cout << "\t\t\tEnter 1 =====< to add record \t\t\n";
+		cout << "\t\t\tEnter 2 =====< to delete record\t\t\n";
+		cout << "\t\t\tEnter 3 =====< to update any record\t\t\n";
+		cout << "\t\t\tEnter 4 =====< to search record\t\t\n";
+		cout << "\t\t\tEnter 5 =====< to filter search\t\t\n";
+		cout << "\t\t\tEnter 6 =====< to exit\t\t\n";
+		cout << "\t\t\tEnter : ";
+		cin >> choice;
+		switch(choice)
+		{
+		case 1:
+			addRecord(rollNo, cgpa, &index);
+			break;
+		case 2:
+			deleteRecord(rollNo, cgpa, &index);
+			break;
+		case 3:
+			updateRecord(rollNo, cgpa, index);
+			break;
+		case 4:
+			searchRecord(rollNo, cgpa, index);
+			break;
+		case 5:
+			filterSearch(rollNo, cgpa, index);
+			break;
+		case 6:
+			break;
+		}
+	} while (choice != 6);
+}

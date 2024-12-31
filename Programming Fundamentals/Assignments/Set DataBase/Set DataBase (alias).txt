@@ -1,0 +1,125 @@
+#include<iostream>
+using namespace std;
+void createSet(int*& set, int setSize)
+{
+	set = new int[setSize];
+}
+void printSet(int*& set, int setNOE)
+{
+	cout << "{ ";
+	for (int i = 0; i < setNOE - 1; i = i + 1)
+	{
+		cout << set[i] << ", ";
+	}
+	cout << set[setNOE - 1] << " }";
+}
+void addElement(int*& set, int& setNOE, int setSize,int element)
+{
+	set[setNOE] = element;
+	setNOE = setNOE + 1;
+}
+int* getUnionSet(int*&a, const int sizeA, int*& b, const int sizeB, int& count)
+{
+	count = 0;
+	for (int i = 0; i < sizeA; i = i + 1)
+	{
+		for (int j = 0; j < sizeB; j = j + 1)
+		{
+			if (a[i] == b[j])
+			{
+				count = count + 1;
+			}
+		}
+	}
+	int i = 0;
+	count = sizeA + sizeB - count;
+	int* unSet = new int[count];
+	bool present;
+	while (i < sizeA)
+	{
+		unSet[i] = a[i];
+		i = i + 1;
+	}
+	for (int j = 0; j < sizeB; j = j + 1)
+	{
+		present = false;
+		for (int k = 0; k < sizeA; k = k + 1)
+		{
+			if (b[j] == a[k])
+			{
+				present = true;
+			}
+		}
+		if (present == false)
+		{
+			unSet[i] = b[j];
+			i = i + 1;
+		}
+	}
+	return unSet;
+}
+int* getIntersectionSet(int*& a, int sizeA, int*& b, int sizeB, int& setSize)
+{
+	setSize = 0;
+	for (int i = 0; i < sizeA; i = i + 1)
+	{
+		for (int j = 0; j < sizeB; j = j + 1)
+		{
+			if (a[i] == b[j])
+			{
+				setSize = setSize + 1;
+			}
+		}
+	}
+	int i = 0;
+	int* intSet = new int[setSize];
+	bool present = true;
+	for (int j = 0; j < sizeB; j = j + 1)
+	{
+		present = true;
+		for (int k = 0; k < sizeA; k = k + 1)
+		{
+			if (b[j] == a[k])
+			{
+				present = false;
+			}
+		}
+		if (present == false)
+		{
+			intSet[i] = b[j];
+			i = i + 1;
+		}
+	}
+	return intSet;
+}
+int main()
+{
+	int* setA;
+	int setASize = 10;
+	int setANOE = 0;
+	createSet(setA, setASize);
+	addElement(setA, setANOE, setASize, 2);
+	addElement(setA, setANOE, setASize, 12);
+	addElement(setA, setANOE, setASize, 32);
+	addElement(setA, setANOE, setASize, 8);
+	addElement(setA, setANOE, setASize, 4);
+	addElement(setA, setANOE, setASize, 14);
+	int* setB;
+	int setBSize = 10;
+	int setBNOE = 0;
+	createSet(setB, setBSize);
+	addElement(setB, setBNOE, setBSize, 22);
+	addElement(setB, setBNOE, setBSize, 2);
+	addElement(setB, setBNOE, setBSize, 3);
+	addElement(setB, setBNOE, setBSize, 5);
+	addElement(setB, setBNOE, setBSize, 9);
+	addElement(setB, setBNOE, setBSize, 14);
+	int unionABSize,intABSize;
+	int* unionAB = getUnionSet(setA, setANOE, setB, setBNOE,unionABSize);
+	int* intAB = getIntersectionSet(setA, setANOE, setB, setBNOE, intABSize);
+	printSet(unionAB, unionABSize);
+	cout << endl;
+	printSet(intAB, intABSize);
+	cout << endl;
+	return 0;
+}

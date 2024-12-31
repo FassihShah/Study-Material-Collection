@@ -1,0 +1,122 @@
+#include<iostream>
+using namespace std;
+void printBoard(const int arr[])
+{
+	int cnt = 0;
+	for (int i = 0; i < 3; i = i + 1)
+	{
+		for (int j = 0; j < 3; j = j + 1)
+		{
+			cout << (char)arr[cnt] << "   ";
+			cnt = cnt + 1;
+		}
+		cout << '\n';
+	}
+}
+void signOption(int* player1, int* player2)
+{
+	int option;
+	cout << "Which player wants to take '&' : ";
+	cin >> option;
+	switch (option)
+	{
+	case 1:
+		*player1 = 38;
+		*player2 = 35;
+	case 2:
+		*player1 = 35;
+		*player2 = 38;
+	}
+}
+bool checkWinner(int* winner, int arr[], int player1, int player2)
+{
+	bool status = false;
+	if ((arr[0] == arr[4] && arr[4] == arr[8]) || (arr[2] == arr[4] && arr[4] == arr[6]) || (arr[3] == arr[4] && arr[4] == arr[5]) || (arr[1] == arr[4] && arr[4] == arr[9]))
+	{
+		*winner = arr[4];
+		status = true;
+	}
+	else if ((arr[0] == arr[3] && arr[3] == arr[6]) || (arr[0] == arr[1] && arr[1] == arr[2]))
+	{
+		*winner = arr[0];
+		status = true;
+	}
+	else if ((arr[8] == arr[5] && arr[5] == arr[2]) || (arr[8] == arr[7] && arr[7] == arr[6]))
+	{
+		*winner = arr[8];
+		status = true;
+	}
+	return status;
+}
+bool checkValidOption(int arr[], int player1, int player2, int option)
+{
+	bool status;
+	if (arr[option] == player1 || arr[option] == player2)
+	{
+		status = false;
+	}
+	else
+	{
+		status = true;
+	}
+	return status;
+}
+void enteringOption(int arr[], int player1, int player2, int* turn)
+{
+	int option, player;
+	cout << "Player " << *turn << " turn : \n";
+	cout << "\t\tEnter the number of block :";
+	cin >> option;
+	while (checkValidOption(arr, player1, player2, option) == false)
+	{
+		cout << "\t\tAlready used block! Kindly enter valid block : ";
+		cin >> option;
+	}
+	if (*turn == 1)
+	{
+		player = player1;
+		*turn = 2;
+	}
+	else
+	{
+		player = player2;
+		*turn = 1;
+	}
+	arr[option] = player;
+}
+void ticTacToe()
+{
+	int arr[9] = { 48,49,50,51,52,53,54,55,56 };
+	int player1 = 38, player2 = 35, winner, turn = 1, cnt = 0;
+	//signOption(&player1, &player2);
+	cout << "Player 1 is '&'\nPlayer 2 is '#'\n";
+	while (cnt < 9 && checkWinner(&winner, arr, player1, player2) == false)
+	{
+		printBoard(arr);
+		enteringOption(arr, player1, player2, &turn);
+		cnt = cnt + 1;
+	}
+	printBoard(arr);
+	if (cnt == 9 && checkWinner(&winner, arr, player1, player2) == false)
+	{
+		cout << "Match is Drawn";
+	}
+	else
+	{
+		if (winner == player1)
+		{
+			winner = 1;
+		}
+		else
+		{
+			winner = 2;
+		}
+		cout << "Player " << winner << " won the game";
+	}
+}
+int main()
+{
+	ticTacToe();
+	cout << endl;
+	return 0;
+}

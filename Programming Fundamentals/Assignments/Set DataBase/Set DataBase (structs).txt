@@ -1,0 +1,132 @@
+#include<iostream>
+using namespace std;
+struct Set
+{
+	int* data;
+	int numberOfElements=0;
+	int size;
+};
+void createSet(Set* s,int size)
+{
+	s->size = size;
+	s->numberOfElements = 0;
+	(*s).data = new int[size];
+}
+void printSet(Set* s)
+{
+	cout << "{ ";
+	for (int i = 0; i < (s->numberOfElements) - 1; i = i + 1)
+	{
+		cout << (*s).data[i] << ", ";
+	}
+	cout << (s->data)[(s->numberOfElements) - 1] << " }";
+}
+void addElement(Set* s, int element)
+{
+	(s->data)[(*s).numberOfElements] = element;
+	(s->numberOfElements) = (s->numberOfElements) + 1;
+}
+Set getUnionSet(Set* a, Set* b)
+{
+	int count = 0;
+	for (int i = 0; i < (*a).numberOfElements; i = i + 1)
+	{
+		for (int j = 0; j < (*b).numberOfElements; j = j + 1)
+		{
+			if (a->data[i] == b->data[j])
+			{
+				count = count + 1;
+			}
+		}
+	}
+	int i = 0;
+	count = ((*a).numberOfElements + (*b).numberOfElements) - count;
+	Set unSet;
+	createSet(&unSet, count);
+	unSet.numberOfElements = count;
+	bool present;
+	while (i < (*a).numberOfElements)
+	{
+		(unSet.data)[i] = a->data[i];
+		i = i + 1;
+	}
+	for (int j = 0; j < (*b).numberOfElements; j = j + 1)
+	{
+		present = false;
+		for (int k = 0; k < (*a).numberOfElements; k = k + 1)
+		{
+			if (b->data[j] == a->data[k])
+			{
+				present = true;
+			}
+		}
+		if (present == false)
+		{
+			unSet.data[i] = b->data[j];
+			i = i + 1;
+		}
+	}
+	return unSet;
+}
+Set getIntersectionSet(Set* a, Set* b)
+{
+	int setSize = 0;
+	for (int i = 0; i < (*a).numberOfElements; i = i + 1)
+	{
+		for (int j = 0; j < (*b).numberOfElements; j = j + 1)
+		{
+			if (a->data[i] == b->data[j])
+			{
+				setSize = setSize + 1;
+			}
+		}
+	}
+	int i = 0;
+	Set intSet;
+	createSet(&intSet, setSize);
+	intSet.numberOfElements = setSize;
+	bool present = true;
+	for (int j = 0; j < (*b).numberOfElements; j = j + 1)
+	{
+		present = true;
+		for (int k = 0; k < (*a).numberOfElements; k = k + 1)
+		{
+			if ((b->data)[j] == (a->data)[k])
+			{
+				present = false;
+			}
+		}
+		if (present == false)
+		{
+			((intSet).data)[i] = ((*b).data)[j];
+			i = i + 1;
+		}
+	}
+	return intSet;
+}
+int main()
+{
+	Set A;
+	createSet(&A,10);
+	addElement(&A,  2);
+	addElement(&A, 12);
+	addElement(&A, 32);
+	addElement(&A, 8);
+	addElement(&A, 4);
+	addElement(&A, 14);
+	Set B;
+	createSet(&B, 10);
+	addElement(&B, 27);
+	addElement(&B, 12);
+	addElement(&B, 7);
+	addElement(&B, 9);
+	addElement(&B, 0);
+	addElement(&B, 14);
+	Set unionAB = getUnionSet(&A, &B);
+	Set intAB = getIntersectionSet(&A,&B);
+	printSet(&unionAB);
+	cout << endl;
+	printSet(&intAB);
+	cout << endl;
+	return 0;
+}

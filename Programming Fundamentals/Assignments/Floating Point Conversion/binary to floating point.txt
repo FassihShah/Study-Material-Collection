@@ -1,0 +1,50 @@
+#include<iostream>
+using namespace std;
+void binaryToFloatingPoint(int[]);
+int main()
+{
+	int binary[32] = { 0,1,0,0,0,0,0,1,1,0,1,1,1,0,1,1,0,1,0,1,1,1,0,0,0,0,1,0,1,0,0,1 };
+	binaryToFloatingPoint(binary);
+	cout << endl;
+	return 0;
+}
+
+
+double getPower(double x, double power)
+{
+	double  answer;
+	int cnt2 = 1;
+	answer = 1;
+	while (cnt2 <= power)
+	{
+		answer = answer * x;
+		cnt2 = cnt2 + 1;
+	}
+	return answer;
+}
+double exponentBits(int array[])
+{
+	double exp = 0;
+	for (int i = 0; i <= 7; i = i + 1)
+	{
+		exp = exp + array[8 - i] * getPower(2, i);
+	}
+	exp = exp - 127;
+	exp < 0 ? exp = exp * (-1),exp=1/(getPower(2,exp)) :exp=getPower(2,exp);
+	return exp;
+}
+double mantessaBits(int array[])
+{
+	double mantessa = 1;
+	for (int i = 1; i <= 23; i = i + 1)
+	{
+		mantessa = mantessa + array[8 + i] * (1 / getPower(2, i));
+	}
+	return mantessa;
+}
+void binaryToFloatingPoint(int array[])
+{
+	int sign;
+	array[0] == 0 ? sign = 1 : sign = -1;
+	cout << sign * exponentBits(array) * mantessaBits(array);
+}

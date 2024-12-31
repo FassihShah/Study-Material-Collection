@@ -1,0 +1,28 @@
+#include<iostream>
+using namespace std;
+int main()
+{
+	char ch[20] = "BSEF22 Semester # 1";
+	int a[10] = { 1,2,3,4,5,6,7,8,9,10 }, b[4] = { 5, 7, 9, 0 }, c[3][4] = { {2,4,6,7},{3,7,6,2},{8,0,9,4} };
+	int* d[3] = { a,b};
+	cout << "d[0][0] : " << d[0][0] << endl;
+	cout << "d[0] : " <<d[0] << endl;
+	cout << "& d[0] : " << &d[0] << endl;
+	cout << "d : " << d << endl;
+	cout << "& d[0][0] : " << &d[0][0] << endl;
+	cout << "ch[3] : " << ch[3] << endl;
+	cout << "& ch[3] : " << &ch[3] << endl;
+	cout << "& ch[0] : " << &ch[0] << endl;
+	cout << "& ch : " << &ch << endl;
+	cout << "ch : " << ch << endl;
+	cout << "ch[0] : " << ch[0] << endl;
+	cout << "a : " << a << endl;
+	cout << "a[0] : " << a[0] << endl;
+	cout << "& a[0] : " << &a[0] << endl;
+	cout << "c : " << c << endl;
+	cout << "c[0] : " << c[0] << endl;
+	cout << "c[0][0] : " << c[0][0] << endl;
+	cout << "& c[0][0] : " << &c[0][0] << endl;
+	cout << endl;
+	return 0;
+}

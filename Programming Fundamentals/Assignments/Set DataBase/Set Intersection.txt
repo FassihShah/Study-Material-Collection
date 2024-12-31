@@ -1,0 +1,48 @@
+#include<iostream>
+using namespace std;
+int* getIntersectionSet(int* , int,int* , int,int *);
+int main()
+{
+	int* b;
+	int a[6] = { 1,2,3,4,5,7 }, c[6] = { 3,4,5,8,6,9 }, sizeB;
+	b = getIntersectionSet(a, 6, c,6, &sizeB);
+	for (int i = 0; i < sizeB; i = i + 1)
+	{
+		cout << b[i] << "  ";
+	}
+	return 0;
+}
+int* getIntersectionSet(int* a, int sizeA, int* b, int sizeB, int * setSize)
+{
+	*setSize = 0;
+	for (int i = 0; i < sizeA; i = i + 1)
+	{
+		for (int j = 0; j < sizeB; j = j + 1)
+		{
+			if (a[i] == b[j])
+			{
+				*setSize = *setSize + 1;
+			}
+		}
+	}
+	int i = 0;
+	int* intSet = new int[*setSize];
+	bool present = true;
+	for (int j = 0; j < sizeB; j = j + 1)
+	{
+		present = true;
+		for (int k = 0; k < sizeA; k = k + 1)
+		{
+			if (b[j] == a[k])
+			{
+				present = false;
+			}
+		}
+		if (present == false)
+		{
+			intSet[i] = b[j];
+			i = i + 1;
+		}
+	}
+	return intSet;
+}

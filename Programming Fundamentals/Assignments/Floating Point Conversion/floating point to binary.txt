@@ -1,0 +1,185 @@
+#include<iostream>
+using namespace std;
+void floatingPointRepresentationApp(float a);
+int main()
+{
+	floatingPointRepresentationApp(-22.41);
+	cout << endl;
+	return 0;
+}
+
+
+long long int convertBase10ToBinary(int numInBase10)
+{
+	long long int  mode, divisor = 1;
+	long long int numInTarget = 0;
+	while (numInBase10 >= 2)
+	{
+		mode = numInBase10 % 2;
+		numInBase10 = numInBase10 / 2;
+		mode = mode * divisor + numInTarget;
+		numInTarget = mode;
+		divisor = divisor * 10;
+	}
+	numInTarget = numInBase10 * divisor + numInTarget;
+	return numInTarget;
+}
+int findLenght(int num)
+{
+	int mode, lenght = 0;
+	if (num == 0)
+	{
+		lenght = 1;
+	}
+	while (num != 0)
+	{
+		mode = num % 10;
+		num = num / 10;
+		lenght = lenght + 1;
+	}
+	return lenght;
+}
+int findDivisor(int num)
+{
+	int divisor = 1, lenght = findLenght(num);
+	while (lenght > 1)
+	{
+		divisor = divisor * 10;
+		lenght = lenght - 1;
+	}
+	return divisor;
+}
+void putIntegralBinInArray(int array[], long long int integralBin)
+{
+	int lenght = findLenght(integralBin), lenght2;
+	integralBin = integralBin % (findDivisor(integralBin));
+	lenght = lenght - 1;
+	lenght2 = lenght - findLenght(integralBin);
+	for (int i = 8 + lenght, start = 9; i >= start; i = i - 1)
+	{
+		if (lenght2 != 0)
+		{
+			array[start] = 0;
+			start = start + 1;
+			i = i + 1;
+			lenght2 = lenght2 - 1;
+		}
+		else
+		{
+			array[i] = integralBin % 10;
+			integralBin = integralBin / 10;
+		}
+	}
+}
+int putFractionalInArray(float a, int array[], int lenght)
+{
+	float b = a - (int)a;
+	bool status = true;
+	int expCount = 0, count = 0, start = 8 + lenght;
+	while ((b - (int)b) != 0 && lenght <= 23)
+	{
+		b = b * 2;
+		if ((int)b == 0)
+		{
+			if ((int)a == 0)
+			{
+				if (status == false)
+				{
+					array[start] = 0;
+					lenght = lenght + 1;
+					start = start + 1;
+				}
+			}
+			else
+			{
+				array[start] = 0;
+				lenght = lenght + 1;
+				start = start + 1;
+			}
+			count = count + 1;
+		}
+		else
+		{
+			if ((int)a != 0)
+			{
+				array[start] = 1;
+				lenght = lenght + 1;
+				start = start + 1;
+			}
+			else
+			{
+				if (status == true)
+				{
+					status = false;
+					count = count + 1;
+					expCount = count;
+				}
+				else
+				{
+					array[start] = 1;
+					lenght = lenght + 1;
+					start = start + 1;
+				}
+			}
+			b = b - 1;
+		}
+	}
+	return -expCount;
+}
+int giveExp(float a, long long int integralBin)
+{
+	int exp = 0;
+	if ((int)a == 1)
+	{
+		exp = 0;
+	}
+	else
+	{
+		while (integralBin != 0)
+		{
+			integralBin = integralBin / 10;
+			exp = exp + 1;
+		}
+		exp = exp - 1;
+	}
+	return exp + 127;
+}
+void putExpInArray(int array[], int exp)
+{
+	long long expBin = convertBase10ToBinary(exp);
+	for (int i = 8; i >= 1; i = i - 1)
+	{
+		array[i] = expBin % 10;
+		expBin = expBin / 10;
+	}
+}
+
+void floatingPointRepresentationApp(float a)
+{
+	int array[32];
+	a < 0 ? a = a * (-1), array[0] = 1 : array[0] = 0;
+	long long int integralBin = convertBase10ToBinary((int)a);
+	int exp, lenght = findLenght(integralBin);
+	for (int i = 1; i < 32; i = i + 1)
+	{
+		array[i] = 0;
+	}
+	putIntegralBinInArray(array, integralBin);
+	if ((int)a == 0)
+	{
+		exp = putFractionalInArray(a, array, lenght);
+		exp = exp + 127;
+	}
+	else
+	{
+		putFractionalInArray(a, array, lenght);
+		exp = giveExp(a, integralBin);
+	}
+	cout << "exponent = " << exp << '\n';
+	putExpInArray(array, exp);
+	cout << "Binary Representation =  ";
+	for (int i = 0; i < 32; i = i + 1)
+	{
+		cout << array[i];
+	}
+}

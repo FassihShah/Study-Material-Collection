@@ -1,0 +1,55 @@
+#include<iostream>
+using namespace std;
+void copyString(char* const dest, const char* const src)
+{
+	int i = 0;
+	while (src[i] != '\0')
+	{
+		dest[i] = src[i];
+		i = i + 1;
+	}
+	dest[i] = '\0';
+}
+struct Address
+{
+	int postalCode;
+	int countryCode;
+	char city[100];
+	char town[100];
+	int houseNo;
+	char block;
+};
+struct personalInfo
+{
+	long long int cellNo;
+	Address address;
+	char email[100];
+};
+void displayPersonalInfo(personalInfo* name)
+{
+	cout << "Cell No. : " << name->cellNo;
+	cout << "\nEmail : " << name->email;
+	cout << "\nAddress : ";
+	cout << "\n\tCountry Code : " << name->address.countryCode;
+	cout << "\n\tPostal Code : " << name->address.postalCode;
+	cout << "\n\tResidence : " << name->address.houseNo<<"-"<< name->address.block<<" "<< name->address.town<<", "<< name->address.city;
+}
+void addRecord(personalInfo* name,long long int cell,const char email[100],const char town[100],const char city[100],char block, int house, int postal, int country)
+{
+	copyString(name->address.city, city);
+	copyString(name->address.town, town);
+	copyString(name->email, email);
+	name->cellNo = cell;
+	name->address.block = block;
+	name->address.houseNo = house;
+	name->address.countryCode = country;
+	name->address.postalCode = postal;
+}
+int main()
+{
+	personalInfo fassih;
+	addRecord(&fassih, 3154472419, "fassihshah22@gmail.com", "Samnabad", "Lahore", 'N', 208, 54000, 92);
+	displayPersonalInfo(&fassih);
+	cout << endl;
+	return 0;
+}

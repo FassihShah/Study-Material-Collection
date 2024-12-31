@@ -1,0 +1,26 @@
+int** multiplyMatrix(Matrix m1, Matrix m2, int* mulRows, int* mulCols)
+{
+	if (m1.cols != m2.rows)
+	{
+		cout << "Multiplication is Not Possible.";
+		exit(0);
+	}
+	int** result = nullptr;
+	*mulRows = m1.rows;
+	*mulCols = m2.cols;
+
+	result = createMatrix(*mulRows, *mulCols);
+
+	for (int i = 0; i < m1.rows; i = i + 1)
+	{
+		for (int j = 0; j < m2.cols; j = j + 1)
+		{
+			result[i][j] = 0;
+			for (int k = 0; k < m2.rows; k = k + 1)
+			{
+				result[i][j] = result[i][j] + (m1.data[i][k] * m2.data[k][j]);
+			}
+		}
+	}
+	return result;
+}

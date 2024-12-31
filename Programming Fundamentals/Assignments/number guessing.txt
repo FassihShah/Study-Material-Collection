@@ -1,0 +1,40 @@
+#include<iostream>
+using namespace std;
+int main()
+{
+	int l=0, h = 999, cnt = 1, num, choice;
+	int range[1000];
+	for (int i = 0; i < 1000; i = i + 1)
+	{
+		range[i] = i+1;
+	}
+	for (int i = 0; i < 10; i = i + 1)
+	{
+		num = (range[h] + range[l]) / 2;
+		cout << "Try # " << cnt;
+		cout << "\nPress 1 ==< If the hidden number equal to " << num;
+		cout << "\nPress 2 ==< If the hidden number less than " << num;
+		cout << "\nPress 3 ==< If the hidden number greater than " << num << endl;
+		cin >> choice;
+		switch (choice)
+		{
+		case 1:
+		{
+			exit(0);
+		}
+		case 2:
+		{
+			h = num - 1;
+			break;
+		}
+		case 3:
+		{
+			l = num - 1;
+			break;
+		}
+		}
+		cnt = cnt + 1;
+	}
+	cout << endl;
+	return 0;
+}
