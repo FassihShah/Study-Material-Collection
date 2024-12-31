@@ -1,0 +1,28 @@
+#include<iostream>
+#include"DessertShoppe.h"
+#include"Sundae.h"
+#include"Candy.h"
+#include"Cookie.h"
+#include"IceCream.h"
+#include"Checkout.h"
+using namespace std;
+int main()
+{
+	DessertShoppe::setTaxRate(17.5);
+	Checkout c;
+	c.enterItem(Candy(2.25, 399, "Fall 22: Special Platter of Candies : Pop Rocks Candy+Nerds Candy+Swedish Fish Candy+Candy Corn"),3);
+	c.enterItem(IceCream(105, "Vanilla Ice Cream"), 10);
+	c.enterItem(Sundae(145, 50, "Chocolate Chip Ice Cream with Pineapple and Almonds"), 2);
+	c.enterItem(Cookie(399, 15, "Oatmeal Raisin Cookies"), 2);
+	cout << c.toString();
+	c.clear();
+	c.enterItem(IceCream(145, "Strawberry Ice Cream"));
+	c.enterItem(Sundae(105, 50, "Caramel"));
+	c.enterItem(Candy(1.33, 89, "Gummy Worms"));
+	c.enterItem(Cookie(44, 30, "Chocolate Chip Cookies"));
+	c.enterItem(Candy(1.55, 209, "Salt Water Taffy"));
+	c.enterItem(Candy(3.0, 109, "Candy Corn"));
+	cout << "\n\n" << c.toString();
+	cout << endl;
+	return 0;
+}
