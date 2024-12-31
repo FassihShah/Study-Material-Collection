@@ -1,0 +1,26 @@
+void hanoi(int n, Stack<int>& s, Stack<int>& a, Stack<int>& d)
+{
+    if (n == 1)
+        d.push(s.pop());
+    else
+    {
+        hanoi(n - 1, s, d, a);
+        d.push(s.pop());
+        hanoi(n - 1, a, s, d);
+    }
+}
+int main()
+{
+    Stack<int> s(20), a(20), d(20);
+    s.push(5);
+    s.push(4);
+    s.push(3);
+    s.push(2);
+    s.push(1);
+    hanoi(5, s, a, d);
+    while (!s.isEmpty())
+    {
+        cout << s.pop() << ",";
+    }
+    return 0;
+}

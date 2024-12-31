@@ -1,0 +1,133 @@
+#include<iostream>
+#include"Stack.h"
+#include"String.h"
+using namespace std;
+int getPrecedence(char op) 
+{
+    if (op == '+' || op == '-')
+        return 1;
+    if (op == '*' || op == '/')
+        return 2;
+    if (op == '^')
+        return 3;
+    return 0;
+}
+String infixToPostfix(const String& infix)
+{
+	String postfix;
+    Stack<char> operators(infix.getLenght());
+    for (int i = 0; i < infix.getLenght(); i++)
+    {
+        if (infix[i] == ')')
+        {
+            while (!operators.isEmpty() && operators.top() != '(')
+            {
+                postfix += operators.pop();
+            }
+            operators.pop();
+        }
+        else if (getPrecedence(infix[i]) || infix[i] == '(')
+        {
+            if ((getPrecedence(infix[i]) > getPrecedence(operators.top())) || operators.isEmpty() || infix[i] == '(')
+            {
+                operators.push(infix[i]);
+            }
+            else
+            {
+                while (getPrecedence(infix[i]) <= getPrecedence(operators.top()))
+                {
+                    postfix += operators.pop();
+                }
+                operators.push(infix[i]);
+            }
+        }
+        else
+            postfix += infix[i];
+    }
+    while (!operators.isEmpty())
+    {
+        postfix += operators.pop();
+    }
+    return postfix;
+}
+String infixToPrefix(String infix)
+{
+    infix.reverse();
+    String postfix;
+    Stack<char> operators(infix.getLenght());
+    for (int i = 0; i < infix.getLenght(); i++)
+    {
+        if (infix[i] == '(')
+        {
+            while (!operators.isEmpty() && operators.top() != ')')
+            {
+                postfix += operators.pop();
+            }
+            operators.pop();
+        }
+        else if (getPrecedence(infix[i]) || infix[i] == ')')
+        {
+            if ((getPrecedence(infix[i]) > getPrecedence(operators.top())) || operators.isEmpty() || infix[i] == ')')
+            {
+                operators.push(infix[i]);
+            }
+            else
+            {
+                while (getPrecedence(infix[i]) < getPrecedence(operators.top()))
+                {
+                    postfix += operators.pop();
+                }
+                operators.push(infix[i]);
+            }
+        }
+        else
+            postfix += infix[i];
+    }
+    while (!operators.isEmpty())
+    {
+        postfix += operators.pop();
+    }
+    postfix.reverse();
+    return postfix;
+}
+int evaluate(String exp)
+{
+    Stack<int> operands(exp.getLenght());
+    exp = infixToPostfix(exp);
+    for (int i = 0; i < exp.getLenght(); i++)
+    {
+        if (getPrecedence(exp[i]))
+        {
+            int op1 = operands.pop();
+            int op2 = operands.pop();
+            switch (exp[i]) 
+            {
+            case '+':
+                operands.push(op2 + op1);
+                break;
+            case '-':
+                operands.push(op2 - op1);
+                break;
+            case '*':
+                operands.push(op2 * op1);
+                break;
+            case '/':
+                operands.push(op2 / op1);
+                break;
+            case '^':
+                operands.push(pow(op2, op1));
+                break;
+            }
+        }
+        else
+            operands.push(exp[i] - '0');
+    }
+    return operands.pop();
+}
+int main()
+{
+    String infix("2^3+5*2");
+    cout << evaluate(infix);
+	cout << endl;
+	return 0;
+}

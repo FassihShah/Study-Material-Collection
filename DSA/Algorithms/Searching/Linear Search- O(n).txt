@@ -1,0 +1,13 @@
+int linearSearch(int array[], int size, int key)
+{
+	int i = 0;
+	while (i < size)
+	{
+		if (array[i] == key)
+		{
+			return i;
+		}
+		i++;
+	}
+	return -1;
+}

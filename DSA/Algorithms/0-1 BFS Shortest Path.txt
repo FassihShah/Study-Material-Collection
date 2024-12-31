@@ -1,0 +1,37 @@
+int shortestPath(int n, vector<vector<pair<int, int>>> &graph)
+    {
+        // Initialize distance array with a large value (INT_MAX)
+        vector<int> dist(n, INT_MAX);
+        dist[0] = 0; // Distance to the start node is 0
+
+        // Deque to store nodes for BFS
+        deque<int> dq;
+        dq.push_front(0); // Start BFS from node 0
+
+        while (!dq.empty())
+        {
+            int node = dq.front();
+            dq.pop_front();
+
+            // Iterate over neighbors of the current node
+            for (auto &edge : graph[node])
+            {
+                int neighbor = edge.first;
+                int weight = edge.second;
+
+                if (weight == 0 && dist[node] < dist[neighbor])
+                {
+                    dist[neighbor] = dist[node];
+                    dq.push_front(neighbor); // Push to the front for 0-weight edge
+                }
+                else if (weight == 1 && dist[node] + 1 < dist[neighbor])
+                {
+                    dist[neighbor] = dist[node] + 1;
+                    dq.push_back(neighbor); // Push to the back for 1-weight edge
+                }
+            }
+        }
+
+        // Return the distance to the last node
+        return dist[n - 1] == INT_MAX ? -1 : dist[n - 1];
+    }

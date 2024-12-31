@@ -1,0 +1,12 @@
+void dfs(T node, vector<T>& res, unordered_map<T, bool>& visited)  /// DFS helping function
+{
+    visited[node] = true;
+    res.push_back(node);
+    for (auto i : adj[node])
+    {
+        if (!visited[i])
+        {
+            dfs(i, res, visited);
+        }
+    }
+}

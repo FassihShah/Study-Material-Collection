@@ -1,0 +1,38 @@
+int dijkstra(int n, vector<vector<pair<int, int>>> &graph)
+    {
+        // Initialize the distance array with a large value (INT_MAX)
+        vector<int> dist(n, INT_MAX);
+        dist[0] = 0; // Distance to the start node is 0
+
+        // Min-heap (priority queue) to store nodes with their distances
+        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
+        pq.push({0, 0}); // Push the start node with distance 0
+
+        while (!pq.empty())
+        {
+            int node = pq.top().second;
+            int d = pq.top().first;
+            pq.pop();
+
+            // If the distance is already greater than the current distance, skip it
+            if (d > dist[node])
+                continue;
+
+            // Iterate over the neighbors of the current node
+            for (auto &edge : graph[node])
+            {
+                int neighbor = edge.first;
+                int weight = edge.second;
+
+                // Relaxation step: if a shorter path is found
+                if (dist[node] + weight < dist[neighbor])
+                {
+                    dist[neighbor] = dist[node] + weight;
+                    pq.push({dist[neighbor], neighbor}); // Push the updated node to the priority queue
+                }
+            }
+        }
+
+        // Return the distance to the last node
+        return dist[n - 1] == INT_MAX ? -1 : dist[n - 1];
+    }

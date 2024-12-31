@@ -1,0 +1,34 @@
+                         // FOR SORTED ARRAYS //
+
+int binarySearch(int array[], int size, int key)
+{
+    int left = 0;
+    int right = size - 1;
+    while (left <= right) 
+    {
+        int mid = (left + right) / 2;
+        if (array[mid] == key)
+            return mid;
+        if (array[mid] < key)
+            left = mid + 1;
+        else
+            right = mid - 1;
+    }
+    return -1;
+}
+
+                       // RECURSIVE SEARCH //
+
+int binarySearch(int array[], int left, int right, int key)
+{
+    if (left > right)
+        return -1;
+    int mid = (left + right) / 2;
+    if (array[mid] == key)
+        return mid;
+    if (array[mid] < key)
+        left = mid + 1;
+    else
+        right = mid - 1;
+    binarySearch(array, left, right, key);
+}
