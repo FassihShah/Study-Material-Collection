@@ -1,0 +1,92 @@
+class TrieNode
+{
+public:
+    unordered_map<char, TrieNode*> children; // Map of child nodes
+    bool isEndOfWord; // Flag to indicate the end of a word
+    int prefixCount; // Count of words with this prefix
+
+    TrieNode()
+    {
+        isEndOfWord = false; // Initialize as not the end of a word
+        prefixCount = 0; // Initialize prefix count
+    }
+};
+
+class Trie
+{
+private:
+    TrieNode* root;
+
+public:
+    Trie()
+    {
+        root = new TrieNode(); // Initialize root node
+    }
+
+    // Insert a word into the Trie
+    void insert(const string& word)
+    {
+        TrieNode* node = root;
+
+        for (char ch : word)
+        {
+            if (node->children.find(ch) == node->children.end())
+            {
+                node->children[ch] = new TrieNode(); // Create a new node if not present
+            }
+            node = node->children[ch]; // Move to the child node
+            node->prefixCount++; // Increment the prefix count
+        }
+        node->isEndOfWord = true; // Mark the end of the word
+    }
+
+    // Search for a word in the Trie
+    bool search(const string& word)
+    {
+        TrieNode* node = root;
+
+        for (char ch : word)
+        {
+            if (node->children.find(ch) == node->children.end())
+            {
+                return false; // If the character is not found, return false
+            }
+            node = node->children[ch]; // Move to the child node
+        }
+
+        return node->isEndOfWord; // Return true if it is the end of the word
+    }
+
+    // Count the number of words with a given prefix
+    int countWordsWithPrefix(const string& prefix)
+    {
+        TrieNode* node = root;
+
+        for (char ch : prefix)
+        {
+            if (node->children.find(ch) == node->children.end())
+            {
+                return 0; // If the prefix does not exist, return 0
+            }
+            node = node->children[ch]; // Move to the child node
+        }
+
+        return node->prefixCount; // Return the count of words with this prefix
+    }
+
+    // Destructor to free allocated memory
+    ~Trie()
+    {
+        deleteHelper(root);
+    }
+
+    // Helper function for destructor
+    void deleteHelper(TrieNode* node)
+    {
+        for (auto& pair : node->children)
+        {
+            deleteHelper(pair.second); // Recursively delete child nodes
+        }
+        delete node; // Delete the current node
+    }
+};
