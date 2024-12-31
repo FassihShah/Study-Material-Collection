@@ -1,0 +1,103 @@
+
+            //DataTable products = new DataTable();
+            //DataColumn Id = new DataColumn("Id", typeof(int));
+            ////Id.ColumnName = "Id";
+            ////Id.DataType = typeof(float);
+            //DataColumn Name = new DataColumn("Name", typeof(string));
+            ////DataColumn Descrip = new DataColumn("Description", typeof(string));
+            //products.Columns.Add(Id);
+            //products.Columns.Add(Name);
+            //products.Columns.Add("Description", typeof(string));     // To directly add a Column
+            //Id.AutoIncrement = true;
+            //Id.AutoIncrementSeed = 1;
+            //Id.AutoIncrementStep = 1;
+            //products.PrimaryKey = new DataColumn[] { Id };    // Set primary key
+            //DataRow r1 = products.NewRow();
+            //r1["Name"] = "Laptop";
+            //r1["Description"] = "This is a laptop";
+            //products.Rows.Add(r1);
+            //DataRow r2 = products.NewRow();
+            //r2["Name"] = "Mobile";
+            //r2["Description"] = "This is a mobile";
+            //products.Rows.Add(r2);
+            ////DataRow[] r = products.Select("Name like '%n%'");  // Get rows with any condition
+            ////Console.WriteLine(r[0]["Name"]);
+            ////DataRow r = products.Rows.Find(1);   // Get row with a primary key
+
+            ///// USING DATA ADAPTER
+
+            //string connectionString = "Data Source=(localdb)\\ProjectModels;Initial Catalog=Test;Integrated Security=True;";
+            //SqlConnection conn = new SqlConnection(connectionString);
+            //conn.Open();
+
+            //string selectQuery = "Select * from Products";
+            //string insertQuery = "Insert into Products(Name,Description) values(@n,@d)";
+            //string updateQuery = "Update Products set Name = @n, Description = @d where Id = @i";
+            //string deleteQuery = "Delete from Products where Id = @i";
+
+            //SqlCommand selectCommand = new SqlCommand(selectQuery, conn);
+            //SqlCommand insertCommand = new SqlCommand(insertQuery, conn);
+            //SqlCommand updateCommand = new SqlCommand(updateQuery, conn);
+            //SqlCommand deleteCommand = new SqlCommand(deleteQuery, conn);
+
+            //insertCommand.Parameters.Add("@n", SqlDbType.NVarChar, 50, "Name");         // Specifying value's datatype, size and Column name in memory table
+            //insertCommand.Parameters.Add("@d", SqlDbType.NVarChar, 100, "Description");
+            //updateCommand.Parameters.Add("@n", SqlDbType.NVarChar, 50, "Name");
+            //updateCommand.Parameters.Add("@d", SqlDbType.NVarChar, 100, "Description");
+            //updateCommand.Parameters.Add("@i", SqlDbType.Int, 4, "Id");
+            //deleteCommand.Parameters.Add("@i", SqlDbType.Int, 4, "Id");
+
+            //SqlDataAdapter adapter = new SqlDataAdapter();
+            //adapter.SelectCommand = selectCommand;
+            //adapter.InsertCommand = insertCommand;
+            //adapter.UpdateCommand = updateCommand;
+            //adapter.DeleteCommand = deleteCommand;
+            //DataRow r4 = products.NewRow();
+            //r4["Name"] = "Gun";
+            //r4["Description"] = "This is a gun";
+            //products.Rows.Add(r4);
+            //r2["Description"] = "Mobile";
+            //adapter.Update(products);
+            //conn.Close();
+            ////DataTable dt = new DataTable();
+            ////adapter.Fill(dt);                     // Fill memory table from database table
+            ////object name = dt.Rows[0]["Name"];   
+            ////Console.WriteLine(name);
+            //DataTable dt1= new DataTable();
+            //DataColumn c1= new DataColumn("id",typeof(int));
+            //DataColumn c2=new DataColumn("name",typeof(string));
+            //dt1.Columns.Add(c1);
+            //dt1.Columns.Add (c2);
+            //c1.AutoIncrement = true;
+            //c1.AutoIncrementSeed = 1;
+            //c1.AutoIncrementStep = 1;
+            //dt1.PrimaryKey = new DataColumn[] {c1};
+            //DataRow r1=dt1.NewRow();
+            //r1["name"] = "abcd";
+            //dt1.Rows.Add(r1);
+            //DataRow r2 = dt1.NewRow();
+            //r2["name"] = "xyz";
+            //dt1.Rows.Add(r2);
+            //foreach (DataRow row in dt1.Rows)
+            //{
+            //    Console.WriteLine($"{row["id"]}, {row["name"]}");
+            //}
+            
+            //r2["name"] = "updated";
+            //Console.WriteLine($"{r2["id"]}, {r2["name"]}");
+            //DataRow r3 = dt1.Rows.Find(1);
+            //Console.WriteLine($"after");
+            //dt1.Rows.Remove(r3);
+            //dt1.Rows.RemoveAt(0);
+            //dt1.Rows.Clear();
+            //DataRow[] cond = dt1.Select("Name like '%x%'");
+            //foreach (DataRow row in dt1.Rows)
+            //{
+            //    Console.WriteLine($"{row["id"]}, {row["name"]}");
+            //}
+            //Console.ReadKey();
+           
+           
+        }
+    }
+}

@@ -1,0 +1,53 @@
+viewcomponents donot require model binding they depends on the data send to them while calling them
+have their own model and controller
+partial views depends upon the parent controller and model and are not self contained
+2 methods , invoke and invoke async
+
+but only one can exist 
+
+a folder of component with a class inherited by viewcomponents class 
+shared-.components -> name of that class -> deafult.cshtml
+
+    <h1 class="display-4">Welcome</h1>
+    @* <vc:course-summary></vc:course-summary> *@
+   @*  <vc:course-summary count="50" /> *@
+     @await Component.InvokeAsync("CourseSummary","578");
+
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+view imports
+@using ViewComponents
+@using ViewComponents.Models
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, ViewComponents
+
+
+
+
+class
+using Microsoft.AspNetCore.Mvc;
+
+namespace ViewComponents.Components
+{
+    public class CourseSummary : ViewComponent
+    {
+        //public string Invoke(string count)
+        //{
+        //    return "The total count of students is"+count;
+        //}
+        //public IViewComponentResult Invoke(string count)
+        //{
+        //    return View();
+        //}
+        //public async Task<string> InvokeAsync(string count)
+        //{
+        //    return "hey invoke async"+count;
+        //}
+        public async Task<IViewComponentResult> InvokeAsync()
+        {
+            return View();
+        }
+    }
+}
+
