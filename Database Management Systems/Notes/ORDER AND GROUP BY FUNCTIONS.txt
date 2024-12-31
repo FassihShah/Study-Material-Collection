@@ -1,0 +1,31 @@
+ORDER AND GROUP BY
+
+select * from emp order by empno
+select * from emp order by empno desc
+select sal*12 as annsal from emp order by annsal   // BY ALIAS ORDER
+select ename, deptno, sal FROM emp ORDER BY 2     // BY 2nd Entity
+select max(hiredate),min(hiredate) from emp      // Max/Min
+select max(sal),min(sal),ROUND(avg(sal)),sum(sal) from emp where job like 'SALES%'
+
+select COUNT(*) from emp WHERE deptno=30
+select COUNT(comm) from emp WHERE deptno=30
+select COUNT(DISTINCT deptno) from emp
+
+select AVG(comm) from emp
+select AVG(nvl(comm,0)) from emp
+
+select deptno,ROUND(AVG(sal)) from emp GROUP BY deptno
+select deptno,ROUND(AVG(sal)) from emp GROUP BY deptno order by deptno
+select deptno,job,SUM(sal) from emp GROUP BY deptno,job
+
+select deptno,max(sal) from emp GROUP BY deptno HAVING max(sal)>2900
+select job,sum(sal) AS payroll from emp where job not like 'SALES%' GROUP BY job HAVING sum(sal)>5000 order by sum(sal)
+select ROUND(max(avg(sal))) from emp group by deptno
+
+
+
+DDL Commands
+Select * from courses
+UPDATE Courses set course_credit_hours=4 where course_code= 'CS-PF'
+INSERT INTO COURSES VALUES ('DS-PF', 'Programming Fundamentals','This is PF Courses',5,'IJK');
+delete from courses where course_code ='DS-PF'
