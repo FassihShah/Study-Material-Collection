@@ -1,0 +1,141 @@
+#include <iostream>
+#include <fstream>
+using namespace std;
+float** getMatrix(const string& name) 
+{
+    ifstream ifs(name, ios::in);
+    int rows, columns;
+    ifs >> rows >> columns;
+    float** matrix = new float* [rows];
+    for (int i = 0; i < rows; i=i+1) 
+    {
+        matrix[i] = new float[columns];
+        for (int j = 0; j < columns; j=j+1)
+        {
+            matrix[i][j] = 0;
+        }
+    }
+    float num;
+    for (int i = 0; i < rows; i=i+1) 
+    {
+        for (int j = 0; j < columns; j=j+1) 
+        {
+            ifs >> num;
+            matrix[i][j] = num;
+        }
+    }
+    ifs.close();
+    return matrix;
+}
+
+void addRows(float** matrix, int row, float* rowToBeAdded, int columns, float val = 1.0) 
+{
+    for (int i = 0; i < columns; i=i+1) 
+    {
+        matrix[row][i] += val * rowToBeAdded[i];
+    }
+}
+
+void scalarProduct(float** matrix, int row, float val, int columns) 
+{
+    for (int i = 0; i < columns; i=i+1) 
+    {
+        matrix[row][i] *= val;
+    }
+}
+
+void swapRows(float** matrix, int row1, int row2, int columns)
+{
+    for (int j = 0; j < columns; j=j+1) 
+    {
+        float temp = matrix[row1][j];
+        matrix[row1][j] = matrix[row2][j];
+        matrix[row2][j] = temp;
+    }
+}
+
+void multiplyRow(float* arr, float val, int cols) 
+{
+    for (int i = 0; i < cols; i=i+1) 
+    {
+        arr[i] *= val;
+    }
+}
+
+void convertToEchelonForm(float** matrix, int rows, int columns) {
+    int cnt = 1;
+    while (cnt < rows) 
+    {
+        int piv = cnt - 1;
+        for (int i = cnt; i < rows; i=i+1) 
+        {
+            if (matrix[piv][piv] == 0) 
+            {
+                swapRows(matrix, i, piv, columns);
+            }
+            else 
+            {
+                float* arr = new float[columns];
+                for (int k = 0; k < columns; k=k+1) 
+                {
+                    arr[k] = matrix[piv][k];
+                }
+                if (matrix[piv][piv] != 0) 
+                {
+                    multiplyRow(arr, 1.0 / matrix[piv][piv], columns);
+
+                    if (arr[piv] == -1.0) 
+                    {
+                        multiplyRow(arr, -1.0, columns);
+                    }
+                    multiplyRow(arr, matrix[i][piv], columns);
+                    addRows(matrix, i, arr, columns, -1.0);
+                }
+                if (matrix[i][piv] < 0.00006)
+                {
+                    matrix[i][piv] = 0;
+                }
+                delete[] arr;
+            }
+        }
+        cnt++;
+    }
+}
+void writeMatrix(const string& name, float** mat, int rows, int columns)
+{
+    ofstream ofs;
+    ofs.open(name, ios::out);
+    for (int i = 0; i < rows; i = i + 1)
+    {
+        for (int j = 0; j < columns; j = j + 1)
+        {
+            ofs << mat[i][j] << " ";
+        }
+        ofs << "\n";
+    }
+}
+void display(const string& name, const string& name1, int rows, int columns)
+{
+    float** matrix = getMatrix(name);
+    convertToEchelonForm(matrix, rows, columns);
+    for (int i = 0; i < rows; ++i) {
+        for (int j = 0; j < columns; ++j) {
+            cout << matrix[i][j] << " ";
+        }
+        cout << "\n";
+    }
+    writeMatrix(name1, matrix, rows, columns);
+    for (int i = 0; i < rows; ++i) {
+        delete[] matrix[i];
+    }
+    delete[] matrix;
+}
+int main() 
+{
+    ifstream ifs("mat.txt", ios::in);
+    int rows, columns;
+    ifs >> rows >> columns;
+    ifs.close();
+    display("mat.txt","result.txt", rows, columns);
+    return 0;
+}

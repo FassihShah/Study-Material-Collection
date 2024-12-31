@@ -1,0 +1,109 @@
+#include<iostream>
+using namespace std;
+class DLLNode
+{
+public:
+	int data;
+	DLLNode* next;
+	DLLNode* prev;
+	DLLNode()
+	{
+		next = nullptr;
+		prev = nullptr;
+	}
+	DLLNode(int d, DLLNode* n, DLLNode* p)
+	{
+		data = d;
+		next = n;
+		prev = p;
+	}
+};
+class DLList
+{
+public:
+	DLLNode* head;
+	DLLNode* tail;
+	DLList()
+	{
+		head = tail = nullptr;
+	}
+	void addToTail(int e1)
+	{
+		if (head == nullptr)
+		{
+			head = tail = new DLLNode(e1, nullptr, nullptr);
+		}
+		else
+		{
+			tail = new DLLNode(e1, nullptr, tail);
+			tail->prev->next = tail;
+		}
+	}
+	int deleteFromTail()
+	{
+		int e = tail->data;
+		if (head == tail)
+		{
+			delete head;
+			tail = head = nullptr;
+		}
+		else
+		{
+			tail = tail->prev;
+			delete tail->next;
+			tail->next = 0;
+		}
+		return e;
+	}
+	void addToHead(int e1)
+	{
+		if (head == nullptr)
+		{
+			head = tail = new DLLNode(e1, nullptr, nullptr);
+		}
+		else
+		{
+			head->prev = new DLLNode(e1, head, nullptr);
+			head = head->prev;
+		}
+	}
+	int deleteFromHead()
+	{
+		int e = head->data;
+		if (head == tail)
+		{
+			delete head;
+			head = tail = nullptr;
+		}
+		else
+		{
+			head = head->next;
+			delete head->prev;
+			head->prev = nullptr;
+		}
+		return e;
+	}
+};
+void display(DLList l1)
+{
+	DLLNode* temp = l1.head;
+	int cnt = 0;
+	while (temp != nullptr)
+	{
+		cout << temp->data << "\n";
+		temp = temp->next;
+		cnt++;
+	}
+	cout << "s"<< cnt << "\n";
+}
+int main()
+{
+	DLList l2;
+	l2.addToHead(10);
+	l2.addToHead(20);
+	l2.addToTail(30);
+	l2.addToTail(79);
+	l2.deleteFromHead();
+	l2.deleteFromTail();
+	display(l2);
+}
