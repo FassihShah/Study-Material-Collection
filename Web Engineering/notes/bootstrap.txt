@@ -1,0 +1,71 @@
+fs-1 or display-6 for font sizing
+fw-bold    weight
+border-0 border-1 width
+border-top , bottom,right , left,border-0,border-top-0
+text-decoration-underline
+text-start text-center text-end
+cdn content delivery network
+bg-info bg-primary bg-dark      background colors
+text-md-center  medium or medium sai bari sab devices kai liya centre prr show krai gai us
+sai choti kai liya default yani start
+
+in single line both classes
+text-md-center text-md-end ,,,,, for medium, text in center for large, the same text at end
+container-> contains contents of website 
+comtainer divide into rows divide into columns
+
+orginal content walai tags exists in columns
+row into 12 columns
+width of column in percentage
+col-1
+containers that contain pad content
+deafult container change its width after each breakpoint
+responsive container before that breakpoint 100% after that breakpoint changes
+fluid container always uses 100% width
+container
+container-xl,md,l,sm
+container-fluid
+row takes width of parent(container)
+actual data is added in column
+immediate child of container must be row 
+child of row must be a column
+then columns , columns and rows can be child of each other 
+col auto takes as much space as required
+col-3 reserving 3 out of 12 
+col-sm sm or sm> apply col behavior that is dividing into equal spaced columns below that gives full width to each division 
+col-sm-6
+col-sm or sm> apply 6 col behavior
+col-sm-6 col-md-3 , for sm 6 for md 3
+alignment classes
+->(Vertical Alignment)
+align-items-end,start,center
+for one column
+align-self-center,end,start
+
+->(horizontal alignment)
+justify-content-end,start,center
+(justify-content-evenly)
+
+order-1 order-*
+if 2 out of 3 , jiska order nhi likha woh shuru mai ajye gai
+
+order-sm-3    order-md-2
+order-sm-2    order-md-1
+offset-2 , giving space of 2 cols on left side
+
+
+for margin classes
+ms-auto , shifting remaing cols to left
+
+ms , margin left,ps padding left
+mt , margin top,pt padding top
+mb, margin bottom,pb padding bottom
+me, margin right,pe padding right
+
+
+0 = 0 rem, 1= 0.25 rem, 2=0.5 rem, 3=1 rem, 4=1.5 rem, 5=3 rem
+1 rem=16px
+
+gutter : along x axis padding , along y axis margin
+gx-padding , dividing on both sides (like gx-3 , 8px on both sides)
+gy-  , on top

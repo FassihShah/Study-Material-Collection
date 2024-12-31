@@ -1,0 +1,60 @@
+object oriented programmming  
+database : relations
+
+now ORM (object relation mapper): if we only know OOP  and know nothing about SQL , then what to do ?
+its automatically maps object on relations
+now we are not using queries we will be using ORM mapper, we will doing all in form of objects
+
+But according to performance ADO.net is better.
+
+-> Dapper : eventually we are using SQL queries , but it will be returning in form of objects automatically , no translation so performance is not downgraded 
+-> Entity framework core : mapper will write queries , ie will act as translator as DB dont know about objects so it will convert into query automatically and adds 
+it in DB.
+      . two approaches of entity 
+       Code first : database will be created automatically , 2 types of classes -> against entities(models) ->DB context class bridge between DB and OOP
+               migration : generates code according to which changes are to be made in DB                        
+       Database first: it will automatically create classes.
+
+
+
+flow : make model classes-> make DB context classes -> next running migration command 
+
+in db context class two works
+property of type dbset....jin classes kai against db set ki property bnaye sirf unkai against table bna gai like for view model Student Course we dont need 
+table against it, sirf unkai liya jinkai liya table ki zarorat hai 
+
+IN migration two methods up method and down method, up for updating , down for downgrading
+
+
+
+dotnet tool install --global dotnet-ef
+dotnet add package Microsoft.EntityFrameworkCore.Design
+dotnet ef migrations add InitialCreate
+dotnet ef database update
+Pakistan_123
+
+thursday class:
+completing crud operations
+creating object of db context
+making in using to close automatically
+db set is like a in memory table 
+query is given by 
+
+first -> first object with verefied condition
+single ->  will return a single element
+
+
+there is not relation between students and courses
+but using code first approach we can add relations
+we will define these relations in classes
+
+indexing in DB: for making searching fast , index for record , cost in terms of space
+
+
+many to many 
+course 
+student 
+then there is always another table will be created -> course id fk , student id fk
+but there will be no model
+
+
