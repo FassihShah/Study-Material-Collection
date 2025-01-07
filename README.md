@@ -1,5 +1,5 @@
 # Study-Material-Collection
-This repository is a collaborative effort to compile all essential study materials, lecture notes, assignments, and labs for students at PUCIT. It is designed to help juniors and future students by providing easily accessible resources organized by semester and course.
+This repository is a collaborative effort to compile all essential study materials, lecture notes, assignments, and labs for students at PUCIT. It is designed to help juniors and future students by providing easily accessible resources organized by course.
 
 ## About the Repository
  - A central hub for academic resources related to various courses offered at the university.
