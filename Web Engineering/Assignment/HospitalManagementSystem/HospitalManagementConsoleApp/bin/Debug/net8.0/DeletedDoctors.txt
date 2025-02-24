@@ -1,0 +1,3 @@
+{"Doctor":{"DoctorId":1,"Name":"Harun","Specialization":"Heart"},"DeletionTimestamp":"2024-10-06T13:01:13.3428982+05:00"}
+{"Doctor":{"DoctorId":4,"Name":"Numan","Specialization":"Leg"},"DeletionTimestamp":"2024-10-06T13:41:19.6782685+05:00"}
+{"Doctor":{"DoctorId":3,"Name":"Hassan","Specialization":"heart"},"DeletionTimestamp":"2024-10-06T13:47:49.1899764+05:00"}

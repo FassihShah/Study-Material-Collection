@@ -1,0 +1,5 @@
+{"Patient":{"PatientId":7,"Name":"Gjdga","Email":"gsh@gmail","Disease":"hdds"},"DeletionTimestamp":"2024-10-06T12:54:47.4070667+05:00"}
+{"Patient":{"PatientId":6,"Name":"Shayan","Email":"email@gmail","Disease":"gat"},"DeletionTimestamp":"2024-10-06T12:54:53.5176464+05:00"}
+{"Patient":{"PatientId":8,"Name":"Ali","Email":"ali@gmail.com","Disease":"heart"},"DeletionTimestamp":"2024-10-06T13:27:51.7287387+05:00"}
+{"Patient":{"PatientId":9,"Name":"Harun","Email":"hr@gmail.com","Disease":"dust"},"DeletionTimestamp":"2024-10-06T13:45:13.9069592+05:00"}
+{"Patient":{"PatientId":1006,"Name":"hamza","Email":"hamza@gmail.com","Disease":"Cancer"},"DeletionTimestamp":"2024-10-09T19:12:05.2910506+05:00"}
